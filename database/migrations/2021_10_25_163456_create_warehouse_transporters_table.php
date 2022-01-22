@@ -15,6 +15,8 @@ class CreateWarehouseTransportersTable extends Migration
     {
         Schema::create('warehouse_transporters', function (Blueprint $table) {
             $table->id();
+            $table->integer('warehouse_id');
+            $table->integer('transporter_id');
             $table->timestamps();
         });
     }

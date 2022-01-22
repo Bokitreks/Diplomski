@@ -15,7 +15,7 @@ class CreateTransportersTable extends Migration
     {
         Schema::create('transporters', function (Blueprint $table) {
             $table->id();
-            $table->string('companyName');
+            $table->string('company_name');
             $table->timestamps();
         });
     }
