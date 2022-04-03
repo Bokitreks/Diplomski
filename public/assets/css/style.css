@@ -1,0 +1,70 @@
+#user-icon {
+    text-decoration: none;
+    color: whitesmoke;
+    padding-bottom: 1%;
+    font-size: 1.2em;
+}
+
+#login-div, #register-div {
+    text-align: center;
+    padding-top: 10%;
+}
+#login-div h2 {
+    padding: 2%;
+}
+#register-div h2 {
+    padding: 2%;
+}
+#login-div input {
+    width: 40%;
+    margin: 1% auto;
+}
+#register-div input {
+    width: 40%;
+    margin: 1% auto;
+}
+@media screen and (max-width: 980px) {
+    #login-div,#register-div {
+        text-align: center;
+        padding-top: 20%;
+    }
+    #login-div input {
+    width: 50%;
+    margin: 1% auto;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #login-div,#register-div {
+        text-align: center;
+        padding-top: 25%;
+    }
+    #login-div input {
+    width: 50%;
+    margin: 1% auto;
+    }
+
+    #register-div input {
+        width: 50%;
+        margin: 1% auto;
+    }
+}
+
+#login-register-div {
+    padding-right: 1%;
+    display:none;
+    justify-content: space-around;
+}
+
+#login-register-div ul {
+    padding-right: 1%;
+    display:flex;
+    justify-content: space-around;
+}
+#login-register-div li {
+    padding-right: 5%;
+    padding-bottom: 5%;
+}
+#user-icon {
+    color: tomato;
+}

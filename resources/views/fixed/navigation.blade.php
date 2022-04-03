@@ -33,6 +33,17 @@
               </li>
             </ul>
           </div>
+
+          <div id="login-register-div">
+
+          <ul>
+            <li><a href="{{route('login')}}">Prijava</a></li>
+            <li><p>/</p></li>
+            <li><a href="{{route('register')}}">Registracija</a></li>
+          </ul>
+
+          </div>
+          <a id="user-icon" href="#"><i class="fa fa-user"></i></a>
         </div>
       </nav>
     </header>

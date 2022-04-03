@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->integer('manufacturer_id');
             $table->decimal('price');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
