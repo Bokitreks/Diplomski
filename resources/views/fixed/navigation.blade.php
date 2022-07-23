@@ -37,9 +37,9 @@
           <div id="login-register-div">
 
           <ul>
-            <li><a href="{{route('login')}}">Prijava</a></li>
+            <li><a class="login-register-link" href="{{route('login')}}">Prijava</a></li>
             <li><p>/</p></li>
-            <li><a href="{{route('register')}}">Registracija</a></li>
+            <li><a class="login-register-link" href="{{route('register')}}">Registracija</a></li>
           </ul>
 
           </div>
