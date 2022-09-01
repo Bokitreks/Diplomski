@@ -10,12 +10,20 @@ function registerAction() {
     let password = $("#register_password").val();
     let email = $("#register_email").val();
     
-    console.log(username, password,email);
     $.ajax({
-        url: '/registerAction',
+        url: '/api/register',
         method: 'POST',
+        data: {
+            'username': username,
+            'password': password,
+            'email': email
+        },
+        success:function(data) {
+            alert(data);
+        },
+        error:function(xhr,status,error) {
+            console.log(xhr);
+        }
         
-
-
     });
 }
