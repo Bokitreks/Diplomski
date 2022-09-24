@@ -14,7 +14,12 @@ function registerAction() {
     $.ajax({
         url: '/registerAction',
         method: 'POST',
-        
+        data: {
+            'username': username,
+            'password': password,
+            'email': email
+        },
+        success:function()
 
 
     });
