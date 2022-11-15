@@ -11,7 +11,7 @@ function registerAction() {
     if (errors.length == 0) {
         $("#registerErrors").html("");
         $.ajax({
-            url: "/api/register",
+            url: "/api/user/register",
             method: "POST",
             data: {
                 username: username,

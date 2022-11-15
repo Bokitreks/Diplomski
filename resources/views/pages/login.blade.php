@@ -9,7 +9,7 @@
     <h2>Uloguj se</h2>
     <form>
         <p><b>Korisnicko ime</b></p>
-        <input type="text" class="form-control" id="#login_username" aria-describedby="basic-addon3">
+        <input type="text" class="form-control" id="login_username" aria-describedby="basic-addon3">
         <p><b>Lozinka</b></p>
         <input type="password" class="form-control" id="login_password" aria-describedby="basic-addon3">
         <br/>

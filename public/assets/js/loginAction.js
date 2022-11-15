@@ -10,7 +10,7 @@ function loginAction() {
     if (errors.length == 0) {
         $("#loginErrors").html("");
         $.ajax({
-            url: "/api/login",
+            url: "/api/user/login",
             method: "POST",
             data: {
                 username: username,
