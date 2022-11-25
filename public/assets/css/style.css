@@ -52,6 +52,7 @@
 
 #login-register-div {
     padding-right: 1%;
+    padding-bottom: 0.5%;
     display:none;
     justify-content: space-around;
 }
@@ -70,4 +71,22 @@
 }
 .login-register-link {
     color:tomato;
+}
+#username {
+    color: tomato;
+    padding-left: 2%;
+    padding-bottom: 1%;
+}
+.userButtons {
+    color:tomato;
+    padding-right: 1%;
+    font-size: 0.8em;
+}
+.userButtons:hover {
+    color:rgb(66, 126, 255);
+}
+#cart {
+    color: tomato;
+    padding-left: 5%;
+    padding-bottom: 0.8%;
 }

@@ -18,6 +18,7 @@
         <a href="{{route('register')}}">Nemas nalog ?</a>
         <br/>
         <div id="loginErrors"></div>
+        @csrf
     </form>
 </div>
 @endsection

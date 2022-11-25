@@ -6,6 +6,7 @@ function loginAction() {
     let username = $("#login_username").val();
     let password = $("#login_password").val();
     let errors = loginValidation(username, password);
+    let token = document.getElementsByName("_token")[0].value;
 
     if (errors.length == 0) {
         $("#loginErrors").html("");
@@ -15,9 +16,13 @@ function loginAction() {
             data: {
                 username: username,
                 password: password,
+                _token: "{{ csrf_token() }}"
             },
-            success: function (data) {
+            success: function (data,status,xhr) {
                 alert(data);
+                if(xhr.status == 202) {
+                    window.location.href = '/';
+                }
             },
             error: function (xhr, status, error) {
                 console.log(xhr);

@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Exception;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
-
-use function PHPUnit\Framework\returnValue;
-
 class UserController extends HomeController
 {
     public function registerAction(Request $request) {
@@ -25,12 +23,12 @@ class UserController extends HomeController
                     'email' => $email,
                     'role_id' => 2
                 ]);
-                return response('Successfully registered',201);
+                return Response()->json('Uspesna registracija', 201);
             } catch(Exception $e) {
-                return response($e,400);
+                return Response()->json($e, 400);
             }
         } else {
-            return response('Duplicate email',200);
+            return Response()->json('Email vec zauzet', 200);
         }
     }
 
@@ -39,22 +37,27 @@ class UserController extends HomeController
         $password = $request->input('password');
         $hashPassword = md5($password);
 
-        $checkIfUserExists = User::where('username', $username)->first(); //TODO make username unique
-        if($checkIfUserExists) {
-            $checkCredentials = $checkIfUserExists->password == $hashPassword ? true : false;
+        $user = User::where('username', $username)->first(); //TODO make username unique
+        if($user) {
+            $checkCredentials = $user->password == $hashPassword ? true : false;
             if($checkCredentials) {
-                return  response("Welcome " . $checkIfUserExists->username, 200);
+                $request->session()->put('user', ['id' => $user->id, 'username' => $user->username]);
+                return Response()->json('Dobrodosli ' . $user->username, 202);
             } else {
-                return response('Wrong password', 200);
+                return Response()->json('Pogresna sifra!', 200);
             }
         }
         else {
-            return response('User does not exists, please create an account!', 200);
+            return Response()->json('Korisnik ne postoji, kreirajte nalog!', 200);
         }
     }
 
-    public function checkDuplicateEmail($emailToCheck)
-    {
+    public function logoutAction(Request $request) {
+        $request->session()->forget('user');
+        return Response()->json('Odjavili ste se', 200);
+    }
+
+    public function checkDuplicateEmail($emailToCheck) {
         $allUsers= User::all();
         foreach($allUsers as $user) {
             if($user['email'] == $emailToCheck) {

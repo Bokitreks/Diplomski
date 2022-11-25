@@ -5,7 +5,7 @@
             <div></div>
             <div></div>
         </div>
-    </div>  
+    </div>
     <!-- ***** Preloader End ***** -->
 
     <!-- Header -->
@@ -21,7 +21,7 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{{route('home')}}">Pocetna
                 </a>
-              </li> 
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{route('products')}}">Prozivodi</a>
               </li>
@@ -33,17 +33,24 @@
               </li>
             </ul>
           </div>
-
           <div id="login-register-div">
-
-          <ul>
-            <li><a class="login-register-link" href="{{route('login')}}">Prijava</a></li>
-            <li><p>/</p></li>
-            <li><a class="login-register-link" href="{{route('register')}}">Registracija</a></li>
-          </ul>
-
+            <ul>
+                @if (!Session::has('user'))
+                    <li><a class="login-register-link" href="{{route('login')}}">Prijava</a></li>
+                    <li><p>/</p></li>
+                    <li><a class="login-register-link" href="{{route('register')}}">Registracija</a></li>
+                @else
+                <li><a id="#" class="userButtons" href="#">Podesavanja</a></li>
+                <li><p> | </p></li>
+                <li><a id="logut_button" class="userButtons" href="#">Odjava</a></li>
+                @endif
+              </ul>
           </div>
           <a id="user-icon" href="#"><i class="fa fa-user"></i></a>
+          @if (Session::has('user'))
+             <h4 id="username">{{Session::get('user.username')}}</h4>
+             <a id="cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+          @endif
         </div>
       </nav>
     </header>

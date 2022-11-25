@@ -12,20 +12,20 @@
       <div class="owl-banner owl-carousel">
         <div class="banner-item-01">
           <div class="text-content">
-            <h4>Best Offer</h4>
-            <h2>New Arrivals On Sale</h2>
+            <h4>VELIKI IZBOR</h4>
+            <h2>Najveci izbor sobnih vrata i PVC stolarije</h2>
           </div>
         </div>
         <div class="banner-item-02">
           <div class="text-content">
-            <h4>Flash Deals</h4>
-            <h2>Get your best products</h2>
+            <h4>VI BIRATE</h4>
+            <h2>Izrada po Vasoj meri</h2>
           </div>
         </div>
         <div class="banner-item-03">
           <div class="text-content">
-            <h4>Last Minute</h4>
-            <h2>Grab last minute deals</h2>
+            <h4>UGRADNJA</h4>
+            <h2>Brzo, lako, efikasno</h2>
           </div>
         </div>
       </div>
@@ -37,8 +37,8 @@
         <div class="row">
           <div class="col-md-12">
             <div class="section-heading">
-              <h2>Latest Products</h2>
-              <a href="products.html">view all products <i class="fa fa-angle-right"></i></a>
+              <h2>Novo u ponudi</h2>
+              <a href="products.html">Pogledaj celu ponudu<i class="fa fa-angle-right"></i></a>
             </div>
           </div>
           <div class="col-md-4">
