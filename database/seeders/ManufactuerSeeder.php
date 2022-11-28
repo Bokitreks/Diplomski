@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class NavigationSeeder extends Seeder
+class ManufactuerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,11 +15,10 @@ class NavigationSeeder extends Seeder
     public function run()
     {
         $date = Date('Y-m-d h:m:s');
-        $navigations = [['Pocetna','home'],['Proizvodi','products'],['O nama','about'],['Kontakt','contact']];
-        foreach($navigations as $navigation)
-        DB::table('navigations')->insert([
-            'name' => $navigation[0],
-            'href' => $navigation[1],
+        $manufacturers = ['Talaris', 'Altos', 'Bosal'];
+        foreach($manufacturers as $manufacturer)
+        DB::table('manufacturers')->insert([
+            'manufacturer_name' => $manufacturer,
             'created_at' => $date,
             'updated_at' => $date
         ]);

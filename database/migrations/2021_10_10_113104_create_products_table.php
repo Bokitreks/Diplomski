@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->string('description');
             $table->integer('color_id');
             $table->integer('category_id');
-            $table->integer('warehouse_id');
             $table->integer('manufacturer_id');
             $table->decimal('price');
             $table->timestamps();

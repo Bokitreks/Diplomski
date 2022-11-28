@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,26 +18,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages/home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/contact',function() {
-    return view('pages/contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
-Route::get('/about', function () {
-    return view('pages/about');
-})->name('about');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-Route::get('/products', function () {
-    return view('pages/products');
-})->name('products');
+Route::get('/products', [ProductController::class, 'index'])->name('products');
 
-Route::get('/register', function () {
-    return view('pages/register');
-})->name('register');
+Route::get('/register', [UserController::class, 'register'])->name('register');
 
-Route::get('/login', function () {
-    return view('pages/login');
-})->name('login');
+Route::get('/login', [UserController::class, 'login'])->name('login');

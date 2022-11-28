@@ -6,8 +6,17 @@ use App\Models\User;
 use Exception;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
-class UserController extends HomeController
+class UserController extends BaseController
 {
+
+    public function login(){
+        return view('pages.login',$this->data);
+    }
+
+    public function register(){
+        return view('pages.register',$this->data);
+    }
+
     public function registerAction(Request $request) {
         $username = $request->input('username');
         $password = $request->input('password');

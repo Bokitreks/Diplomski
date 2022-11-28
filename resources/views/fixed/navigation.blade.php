@@ -17,20 +17,12 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{{route('home')}}">Pocetna
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{route('products')}}">Prozivodi</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{route('about')}}">O nama</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{route('contact')}}">Kontakt</a>
-              </li>
+            <ul class="navbar ml-auto">
+                @foreach($navigation as $nav)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route($nav->href)}}">{{$nav->name}}</a>
+                  </li>
+                @endforeach
             </ul>
           </div>
           <div id="login-register-div">

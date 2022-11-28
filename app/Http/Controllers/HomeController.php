@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Navigation;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
-    protected $data;
-
-    public function __construct()
-    {
-        $this->data['navigation'] = Navigation::all();
+    public function index() {
+        return view('pages.home',$this->data);
     }
 }

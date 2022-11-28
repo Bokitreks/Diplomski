@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class NavigationController extends Controller
+class NavigationController extends BaseController
 {
     /**
      * Display a listing of the resource.

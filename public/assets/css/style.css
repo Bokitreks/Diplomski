@@ -90,3 +90,9 @@
     padding-left: 5%;
     padding-bottom: 0.8%;
 }
+.nav-link {
+    color: whitesmoke;
+}
+#navbarResponsive {
+padding-bottom: 1%;
+}

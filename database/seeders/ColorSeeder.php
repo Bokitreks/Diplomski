@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ColorSeeder extends Seeder
 {
@@ -13,6 +14,13 @@ class ColorSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $date = Date('Y-m-d h:m:s');
+        $colors = ['Crna', 'Bela', 'Siva', 'Plava', 'Zuta', 'Crvena', 'Braon'];
+        foreach($colors as $color)
+        DB::table('colors')->insert([
+            'color' => $color,
+            'created_at' => $date,
+            'updated_at' => $date
+        ]);
     }
 }
