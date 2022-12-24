@@ -30,6 +30,10 @@
       <script src="{{asset('assets/js/loginAction.js')}}"></script>
     @endif
 
+    @if (Route::current()->uri() == 'products')
+      <script src="{{asset('assets/js/productPage.js')}}"></script>
+    @endif
+
     @if (Session::has('user'))
       <script src="{{asset('assets/js/logutAction.js')}}"></script>
     @endif

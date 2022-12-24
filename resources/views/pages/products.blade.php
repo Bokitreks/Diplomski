@@ -1,8 +1,8 @@
 @extends('layouts.main-layout')
 
 @section('title') Contact  @endsection
-@section('keywords') Bota,shop,doors,windows,garage doors, webshop @endsection
-@section('description') Bota shop product page, best quality doors, windows and pvc @endsection
+@section('keywords') Bota,vrata, pvc stolarija, sobna vrata, sigurnosna vrata, prodaja @endsection
+@section('description') Bota shop proizvodi visokog kvaliteta, prodaja @endsection
 
 @section('content')
 
@@ -24,34 +24,34 @@
         <div class="col-md-12">
         <div class="filters">
             <ul>
-                <li class="active" data-filter="*">All Products</li>
-                <li data-filter=".des">Featured</li>
-                <li data-filter=".dev">Flash Deals</li>
-                <li data-filter=".gra">Last Minute</li>
+                <li><a href="" class="productCategory" id="getAllProducts">Svi prozivodi</a></li>
+                <li><a href="" class="productCategory" id="getSigurnosnaVrata">Sigurnosna vrata</a></li>
+                <li><a href="" class="productCategory" id="getSobnaVrata">Sobna vrata</a></li>
+                <li><a href="" class="productCategory" id="getPvcStolarija">PVC Stolarija</a></li>
             </ul>
         </div>
         </div>
         <div class="col-md-12">
         <div class="filters-content">
-            <div class="row grid">
-                <div class="col-lg-4 col-md-4 all des">
-                    <div class="product-item">
-                    <a href="#"><img src="assets/images/product_01.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$18.25</h6>
-                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                        <ul class="stars">
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (12)</span>
-                    </div>
-                    </div>
-                </div>
+            <div id="main-products-block" class="row">
+                    @foreach ($products as $product)
+                    <div class="col-lg-4 col-md-4 all des">
+                        <div class="product-item">
+                            <a href="#"><img src="assets/images/product_01.jpg" alt=""></a>
+                            <div class="down-content">
+                                <a href="#"><h4>{{$product->title}}</h4></a>
+                                <h6>{{$product->price}} RSD</h6>
+                                <p>{{$product->description}}</p>
+                                <ul class="stars">
+                                @for($i=0; $i< round($product->avarage_star); $i++)
+                                <li><i class="fa fa-star"></i></li>
+                                @endfor
+                                </ul>
+                                <span>Reviews ({{count($product->reviews)}})</span>
+                            </div>
+                            </div>
+                        </div>
+                    @endforeach
             </div>
         </div>
         </div>

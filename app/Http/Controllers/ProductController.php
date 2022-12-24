@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends BaseController
@@ -13,6 +14,8 @@ class ProductController extends BaseController
      */
     public function index()
     {
+        $this->data['products'] = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->get();
+      //dd($this->data['products']);
         return view('pages.products', $this->data);
     }
 
@@ -80,5 +83,25 @@ class ProductController extends BaseController
     public function destroy($id)
     {
         //
+    }
+
+    public function getAllProductsAction()
+    {
+        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->get();
+    }
+
+    public function getSigurnosnaVrataAction()
+    {
+        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',1)->get();
+    }
+
+    public function getSobnaVrataAction()
+    {
+        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',2)->get();
+    }
+
+    public function getPvcStolarijaAction()
+    {
+        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',3)->get();
     }
 }
