@@ -96,6 +96,7 @@
 #navbarResponsive {
 padding-bottom: 1%;
 }
-.productCategory {
+.productCategoryLink {
     color: rgb(236, 127, 108);
+    font-size: 1.1em;
 }

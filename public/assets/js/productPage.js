@@ -67,9 +67,9 @@ function printProducts(data) {
     data.forEach(product => {
         print += `<div class="col-lg-4 col-md-4 all des">
                     <div class="product-item">
-                        <a href="#"><img src="assets/images/product_01.jpg" alt=""></a>
+                        <a href="/products/${product.id}"><img src="${product.images[0].href}" alt=""></a>
                         <div class="down-content">
-                            <a href="#"><h4>${product.title}</h4></a>
+                            <a href="/products/${product.id}"><h4>${product.title}</h4></a>
                             <h6>${product.price} RSD</h6>
                             <p>${product.description}</p>
                             <ul class="stars">`
@@ -77,7 +77,7 @@ function printProducts(data) {
                                 print += ` <li><i class="fa fa-star"></i></li>`
                             }
                             print += `</ul>
-                            <span> Reviews (${product.reviews.length}) </span>
+                            <span> Komentari (${product.reviews.length}) </span>
                         </div>
                     </div>
                 </div>`;

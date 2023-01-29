@@ -89,7 +89,7 @@ a.filled-button:hover {
 }
 
 .products-heading {
-	background-image: url(../images/products-heading.jpg);
+	background-image: url(../images/products/productsBaner.jpg);
 }
 
 .about-heading {
@@ -419,7 +419,6 @@ header .navbar {
 
 .product-item {
 	border: 1px solid #eee;
-    height: 380px;
 	margin-bottom: 30px;
 }
 

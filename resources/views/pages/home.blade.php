@@ -41,113 +41,24 @@
             <a href="products.html">Pogledaj celu ponudu<i class="fa fa-angle-right"></i></a>
         </div>
         </div>
-        <div class="col-md-4">
-        <div class="product-item">
-            <a href="#"><img src="assets/images/product_01.jpg" alt=""></a>
-            <div class="down-content">
-            <a href="#"><h4>Tittle goes here</h4></a>
-            <h6>$25.75</h6>
-            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-            <ul class="stars">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-            </ul>
-            <span>Reviews (24)</span>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-4">
-        <div class="product-item">
-            <a href="#"><img src="assets/images/product_02.jpg" alt=""></a>
-            <div class="down-content">
-            <a href="#"><h4>Tittle goes here</h4></a>
-            <h6>$30.25</h6>
-            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-            <ul class="stars">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-            </ul>
-            <span>Reviews (21)</span>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-4">
-        <div class="product-item">
-            <a href="#"><img src="assets/images/product_03.jpg" alt=""></a>
-            <div class="down-content">
-            <a href="#"><h4>Tittle goes here</h4></a>
-            <h6>$20.45</h6>
-            <p>Sixteen Clothing is free CSS template provided by TemplateMo.</p>
-            <ul class="stars">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-            </ul>
-            <span>Reviews (36)</span>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-4">
-        <div class="product-item">
-            <a href="#"><img src="assets/images/product_04.jpg" alt=""></a>
-            <div class="down-content">
-            <a href="#"><h4>Tittle goes here</h4></a>
-            <h6>$15.25</h6>
-            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-            <ul class="stars">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-            </ul>
-            <span>Reviews (48)</span>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-4">
-        <div class="product-item">
-            <a href="#"><img src="assets/images/product_05.jpg" alt=""></a>
-            <div class="down-content">
-            <a href="#"><h4>Tittle goes here</h4></a>
-            <h6>$12.50</h6>
-            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-            <ul class="stars">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-            </ul>
-            <span>Reviews (16)</span>
-            </div>
-        </div>
-        </div>
-        <div class="col-md-4">
-        <div class="product-item">
-            <a href="#"><img src="assets/images/product_06.jpg" alt=""></a>
-            <div class="down-content">
-            <a href="#"><h4>Tittle goes here</h4></a>
-            <h6>$22.50</h6>
-            <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-            <ul class="stars">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-            </ul>
-            <span>Reviews (32)</span>
-            </div>
-        </div>
+        @foreach ($latestProducts as $product)
+            <div class="col-lg-4 col-md-4 all des">
+                <div class="product-item">
+                    <a href="#"><img src="{{$product->images[0]->href}}" alt=""></a>
+                    <div class="down-content">
+                        <a href="#"><h4>{{$product->title}}</h4></a>
+                        <h6>{{$product->price}} RSD</h6>
+                        <p>{{$product->description}}</p>
+                        <ul class="stars">
+                        @for($i=0; $i< round($product->avarage_star); $i++)
+                        <li><i class="fa fa-star"></i></li>
+                        @endfor
+                        </ul>
+                        <span>Komentari ({{count($product->reviews)}})</span>
+                    </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
     </div>
@@ -158,26 +69,26 @@
     <div class="row">
         <div class="col-md-12">
         <div class="section-heading">
-            <h2>About Sixteen Clothing</h2>
+            <h2>Saznaj vise o nama</h2>
         </div>
         </div>
         <div class="col-md-6">
         <div class="left-content">
-            <h4>Looking for the best products?</h4>
-            <p><a rel="nofollow" href="https://templatemo.com/tm-546-sixteen-clothing" target="_parent">This template</a> is free to use for your business websites. However, you have no permission to redistribute the downloadable ZIP file on any template collection website. <a rel="nofollow" href="https://templatemo.com/contact">Contact us</a> for more info.</p>
+            <h4>Po cemu se izdvajamo od ostalih?</h4>
+            <p>Nasa kompanija godinama u nazad brine o svojim potrosacima, kvalitetna roba kao i usluga ugradnje i odrzavanja su nam prioritet broj jedan. Neke od nasih najboljih osobina bi izdvojili:</p>
             <ul class="featured-list">
-            <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-            <li><a href="#">Consectetur an adipisicing elit</a></li>
-            <li><a href="#">It aquecorporis nulla aspernatur</a></li>
-            <li><a href="#">Corporis, omnis doloremque</a></li>
-            <li><a href="#">Non cum id reprehenderit</a></li>
+            <li><a href="#">Roba visokog kvaliteta</a></li>
+            <li><a href="#">Pristupacne cene</a></li>
+            <li><a href="#">Brza i efikasna ugradnja</a></li>
+            <li><a href="#">Garancija do cak 6 godina</a></li>
+            <li><a href="#">24/7 dostupnost nasih servisera</a></li>
             </ul>
-            <a href="about.html" class="filled-button">Read More</a>
+            <a href="about.html" class="filled-button">Saznaj vise</a>
         </div>
         </div>
         <div class="col-md-6">
         <div class="right-image">
-            <img src="assets/images/feature-image.jpg" alt="">
+            <img src="assets/images/doorServicer.jpg" alt="doorServicer"/>
         </div>
         </div>
     </div>
@@ -192,11 +103,11 @@
         <div class="inner-content">
             <div class="row">
             <div class="col-md-8">
-                <h4>Creative &amp; Unique <em>Sixteen</em> Products</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque corporis amet elite author nulla.</p>
+                <h4>Kvalitet &amp; Pristupacne cene</h4>
+                <p>Uveri se i sam u kvalitet nasih proizvoda, sta cekas, pogledaj nas katalog</p>
             </div>
             <div class="col-md-4">
-                <a href="#" class="filled-button">Purchase Now</a>
+                <a href="#" class="filled-button">Pogledaj katalog proizvoda</a>
             </div>
             </div>
         </div>

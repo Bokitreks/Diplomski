@@ -15,7 +15,9 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $date = Date('Y-m-d h:m:s');
-        $products = [['Home door classic', 'Sobna vrata Talaris', 1, 2, 1, 18000], ['Securitas', 'Sigurnosna vrata Talaris', 1, 1, 1, 21000]];
+        $products = [['Sobna vrata zeus', 'Klasicna sobna vrata od drveta', 1, 2, 1, 18000], ['Protecta SN', 'Sigurnosna vrata visokog kvaliteta', 7, 1, 1, 21000],
+        ['Platinum Secure', 'Veoma izdrzljiva i pouzdana', 1, 1, 1, 19500], ['Hotel maximum', 'Sigurnosna vrata za hotelske sobe', 7, 1, 2, 17600]
+        , ['PVC klasik', 'Osnovna varijanta PVC prozora', 2, 3, 3, 9800], ['PVC plus', 'PVC prozor sa ojacanim ramom', 2, 3, 2, 12500]];
         foreach($products as $product)
         DB::table('products')->insert([
             'title' => $product[0],
