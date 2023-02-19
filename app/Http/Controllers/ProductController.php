@@ -104,4 +104,34 @@ class ProductController extends BaseController
     {
         return Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',3)->get();
     }
+    public function sortProductsAction(Request $request) {
+        $filter = $request->input('filter');
+        $sort = $request->input('sort');
+        $products = [];
+
+        switch($filter) {
+            case 'sviProizvodi': $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews');
+            break;
+            case 'sigurnosnaVrata': $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',1);
+            break;
+            case 'sobnaVrata': $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',2);
+            break;
+            case 'pvcStolarija': $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',3);
+            break;
+            default : $products = $this->getAllProductsAction();
+        }
+        // dd($products);
+        switch($sort) {
+            case '1': $products->orderBy('created_at', 'DESC');
+            break;
+            case '2': $products->orderBy('price');
+            break;
+            case '3': $products->orderBy('price', "DESC");
+            break;
+            case '4': $products->orderBy('title');
+            break;
+            default : break;
+        }
+        return $products->get();
+    }
 }

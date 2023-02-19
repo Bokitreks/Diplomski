@@ -100,3 +100,14 @@ padding-bottom: 1%;
     color: rgb(236, 127, 108);
     font-size: 1.1em;
 }
+#sort-fields {
+    text-align: center;
+    padding-bottom: 3%;
+}
+.sort {
+    color: rgb(245, 109, 85);
+}
+#sort-div{
+    display: flex;
+    justify-content: flex-end;
+}

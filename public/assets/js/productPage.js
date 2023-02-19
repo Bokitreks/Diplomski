@@ -3,6 +3,10 @@ $('document').ready(function() {
     $('#getSigurnosnaVrata').on('click',getSigurnosnaVrata);
     $('#getSobnaVrata').on('click',getSobnaVrata);
     $('#getPvcStolarija').on('click',getPvcStolarija);
+    $('#sort').on('change',sortProducts);
+
+    localStorage.removeItem('filter');
+    localStorage.setItem('filter', 'sviProizvodi');
 });
 
 function getAllProducts(e) {
@@ -12,6 +16,7 @@ function getAllProducts(e) {
         method: "GET",
         success: function (data) {
             printProducts(data);
+            localStorage.setItem('filter', 'sviProizvodi');
         },
         error: function (xhr, status, error) {
             console.log(xhr);
@@ -26,6 +31,7 @@ function getSigurnosnaVrata(e) {
         method: "GET",
         success: function (data) {
             printProducts(data);
+            localStorage.setItem('filter', 'sigurnosnaVrata');
         },
         error: function (xhr, status, error) {
             console.log(xhr);
@@ -40,6 +46,7 @@ function getSobnaVrata(e) {
         method: "GET",
         success: function (data) {
             printProducts(data);
+            localStorage.setItem('filter', 'sobnaVrata');
         },
         error: function (xhr, status, error) {
             console.log(xhr);
@@ -54,6 +61,7 @@ function getPvcStolarija(e) {
         method: "GET",
         success: function (data) {
             printProducts(data);
+            localStorage.setItem('filter', 'pvcStolarija');
         },
         error: function (xhr, status, error) {
             console.log(xhr);
@@ -65,6 +73,7 @@ function printProducts(data) {
     let mainBlock = $('#main-products-block');
     let print = '';
     data.forEach(product => {
+        let starCount = 5;
         print += `<div class="col-lg-4 col-md-4 all des">
                     <div class="product-item">
                         <a href="/products/${product.id}"><img src="${product.images[0].href}" alt=""></a>
@@ -75,6 +84,12 @@ function printProducts(data) {
                             <ul class="stars">`
                             for(let i=0; i< Math.round(product.avarageStar); i++) {
                                 print += ` <li><i class="fa fa-star"></i></li>`
+                                starCount--;
+                            }
+                            if(starCount != 0) {
+                                for(let i=0;i<starCount;i++) {
+                                    print += '<li><i class="fa fa-star-o"></i></li>'
+                                }
                             }
                             print += `</ul>
                             <span> Komentari (${product.reviews.length}) </span>
@@ -83,4 +98,23 @@ function printProducts(data) {
                 </div>`;
     });
     mainBlock.html(print);
+}
+
+function sortProducts() {
+    let filter = localStorage.getItem('filter');
+    let sort = this.value;
+    $.ajax({
+        url: "/api/products/sortProducts",
+        method: "POSt",
+        data: {
+            'filter' : filter,
+            'sort' : sort
+        },
+        success: function (data) {
+            printProducts(data);
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr);
+        },
+    });
 }

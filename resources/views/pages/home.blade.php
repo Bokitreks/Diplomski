@@ -42,6 +42,9 @@
         </div>
         </div>
         @foreach ($latestProducts as $product)
+            @php
+                $starCount = 5;
+            @endphp
             <div class="col-lg-4 col-md-4 all des">
                 <div class="product-item">
                     <a href="#"><img src="{{$product->images[0]->href}}" alt=""></a>
@@ -52,7 +55,15 @@
                         <ul class="stars">
                         @for($i=0; $i< round($product->avarage_star); $i++)
                         <li><i class="fa fa-star"></i></li>
+                        @php
+                            $starCount--;
+                        @endphp
                         @endfor
+                        @if($starCount != 0)
+                            @for($i=0; $i<$starCount; $i++)
+                                <li><i class="fa fa-star-o"></i></li>
+                            @endfor
+                        @endif
                         </ul>
                         <span>Komentari ({{count($product->reviews)}})</span>
                     </div>
