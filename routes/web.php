@@ -26,6 +26,8 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 
+Route::get('/products/{id}', [ProductController::class, 'showProduct'])->name('showProduct');
+
 Route::get('/register', [UserController::class, 'register'])->name('register');
 
 Route::get('/login', [UserController::class, 'login'])->name('login');

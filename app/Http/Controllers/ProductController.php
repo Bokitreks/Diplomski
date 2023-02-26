@@ -46,9 +46,11 @@ class ProductController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showProduct($id)
     {
-        //
+        $this->data['product'] = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->find($id);
+        return view('pages.showProduct', $this->data);
+
     }
 
     /**

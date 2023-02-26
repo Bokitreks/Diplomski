@@ -52,7 +52,7 @@
                     @endphp
                     <div class="col-lg-4 col-md-4 all des">
                         <div class="product-item">
-                            <a href="#"><img src="{{$product->images[0]->href}}" alt=""></a>
+                            <a href='/products/{{$product->id}}'><img src="{{$product->images[0]->href}}" alt=""></a>
                             <div class="down-content">
                                 <a href="#"><h4>{{$product->title}}</h4></a>
                                 <h6>{{$product->price}} RSD</h6>

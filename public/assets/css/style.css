@@ -111,3 +111,42 @@ padding-bottom: 1%;
     display: flex;
     justify-content: flex-end;
 }
+#main-show-block {
+    padding: 10%;
+}
+#product-main-picture {
+    width: 80%;
+}
+#specifikacija-prozivoda {
+    padding-top: 1%;
+}
+.stars{
+    display: flex;
+}
+.stars li{
+    padding: 0.5%;
+    color: red;
+}
+#specifikacija-prozivoda li{
+    font-size: 1.5em;
+    padding: 1%;
+}
+#specifikacija-prozivoda li p{
+    font-size: 0.7em;
+}
+#cena-proizvoda {
+    padding-top: 13%;
+}
+#cena-proizvoda label {
+    color: red;
+}
+#green-label{
+    color: rgb(0, 189, 0);
+}
+#div-specifikacije {
+    padding: 2%;
+    border: 1px solid rgba(66, 66, 66, 0.5);
+}
+#div-slika-proizvoda h2 {
+    padding-bottom: 2%;
+}
