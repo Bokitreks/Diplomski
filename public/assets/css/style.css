@@ -150,3 +150,32 @@ padding-bottom: 1%;
 #div-slika-proizvoda h2 {
     padding-bottom: 2%;
 }
+#comments-main-div {
+    padding-top: 5%;
+}
+
+#comments-main-div h4 {
+    padding-bottom: 3%;
+}
+
+#comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-form button{
+    margin-top: 2%;
+}
+
+#review-block{
+    padding: 2%;
+    width: 70%;
+    border-bottom: 1px solid rgba(1,1,1,0.1);
+    border-bottom-width: thin;
+}
+#review-stars {
+    display: flex;
+}
+#comment-warning {
+    color: red;
+}

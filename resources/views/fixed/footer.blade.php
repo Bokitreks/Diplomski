@@ -38,6 +38,10 @@
       <script src="{{asset('assets/js/productPage.js')}}"></script>
     @endif
 
+    @if(Route::currentRouteName() === 'showProduct')
+    <script src="{{ asset('assets/js/leaveCommentAction.js') }}"></script>
+    @endif
+
     @if (Session::has('user'))
       <script src="{{asset('assets/js/logutAction.js')}}"></script>
     @endif

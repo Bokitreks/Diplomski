@@ -8,4 +8,8 @@ class User extends Model
 {
     protected $fillable = ['username','password','email','role_id'];
     use HasFactory;
+
+    public function review() {
+        return $this->hasMany(User::class, 'user_id', 'id');
+    }
 }

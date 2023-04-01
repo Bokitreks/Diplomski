@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::prefix('products')->group(function () {
     Route::get('/getSobnaVrata',[ProductController::class,'getSobnaVrataAction'])->name('getSobnaVrataAction');
     Route::get('/getPvcStolarija',[ProductController::class,'getPvcStolarijaAction'])->name('getPvcStolarijaAction');
     Route::post('/sortProducts',[ProductController::class,'sortProductsAction'])->name('sortProductsAction');
+});
+Route::prefix('reviews')->group(function() {
+    Route::post('/writeReview',[ReviewController::class, 'create'])->name('WriteReviewAction');
 });
 
 

@@ -6,6 +6,8 @@ use App\Models\User;
 use Exception;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 class UserController extends BaseController
 {
 
@@ -21,6 +23,16 @@ class UserController extends BaseController
         $username = $request->input('username');
         $password = $request->input('password');
         $email = $request->input('email');
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|min:3|max:50|unique:users',
+            'password' => 'required|min:6|max:50',
+            'email' => 'required|email|unique:users',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
 
         $hashPassword = md5($password);
         $checkDuplicateEmail = self::checkDuplicateEmail($email);
@@ -45,6 +57,15 @@ class UserController extends BaseController
         $username = $request->input('username');
         $password = $request->input('password');
         $hashPassword = md5($password);
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return Response()->json($validator->errors(), 400);
+        }
 
         $user = User::where('username', $username)->first(); //TODO make username unique
         if($user) {

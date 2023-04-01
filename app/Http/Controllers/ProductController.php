@@ -14,7 +14,7 @@ class ProductController extends BaseController
      */
     public function index()
     {
-        $this->data['products'] = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->get();
+        $this->data['products'] = Product::with('category', 'manufacturer', 'color', 'images', 'reviews.user')->get();
       //dd($this->data['products']);
         return view('pages.products', $this->data);
     }
@@ -48,7 +48,7 @@ class ProductController extends BaseController
      */
     public function showProduct($id)
     {
-        $this->data['product'] = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->find($id);
+        $this->data['product'] = Product::with('category', 'manufacturer', 'color', 'images', 'reviews','color', 'product_materials.materials')->find($id);
         return view('pages.showProduct', $this->data);
 
     }
