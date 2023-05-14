@@ -10,8 +10,8 @@
         <div class="row">
           <div class="col-md-12">
             <div class="text-content">
-              <h4>about us</h4>
-              <h2>our company</h2>
+              <h4>O nama</h4>
+              <h2>nasa kompanija</h2>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="section-heading">
-              <h2>Our Background</h2>
+              <h2>Nasa Istorija</h2>
             </div>
           </div>
           <div class="col-md-6">
@@ -34,8 +34,8 @@
           </div>
           <div class="col-md-6">
             <div class="left-content">
-              <h4>Who we are &amp; What we do?</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed voluptate nihil eum consectetur similique? Consectetur, quod, incidunt, harum nisi dolores delectus reprehenderit voluptatem perferendis dicta dolorem non blanditiis ex fugiat. Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, consequuntur, modi mollitia corporis ipsa voluptate corrupti eum ratione ex ea praesentium quibusdam? Aut, in eum facere corrupti necessitatibus perspiciatis quis.</p>
+              <h4>Ko smo mi &amp; Cime se bavimo?</h4>
+              <p>Nasa kompanija osnovana je 1989. godine kao mala preduzetnicka firma, imali smo svega jednu poslovnicu i jedan magacin. Danas, sa ponosom mozemo reci da poslujemo na vise od 10 lokacija u Beogradu i dostupni smo vam 24/7. <br/> Sirok dijapazon proizvoda visokog kvaliteta i pristupacnim cenama je samo jedan od kvaliteta koje posedujemo.Sa brzom i efikasnom ugradnjom, opremite vas stan,kucu,garazu i vratite sjaj u vas dom</p>
               <ul class="social-icons">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -48,13 +48,13 @@
       </div>
     </div>
 
-    
+
     <div class="team-members">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="section-heading">
-              <h2>Our Team Members</h2>
+              <h2>Clanovi naseg tima</h2>
             </div>
           </div>
           <div class="col-md-4">
@@ -73,9 +73,9 @@
                 </div>
               </div>
               <div class="down-content">
-                <h4>Johnny William</h4>
-                <span>CO-Founder</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
+                <h4>Jovan Dimitrijevic</h4>
+                <span>Vlasnik</span>
+                <p>Ambiciozan mladi preduzetnik, osnivac firme BOTA shop.</p>
               </div>
             </div>
           </div>
@@ -95,9 +95,9 @@
                 </div>
               </div>
               <div class="down-content">
-                <h4>Karry Pitcher</h4>
-                <span>Product Expert</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
+                <h4>Katarina Jovic</h4>
+                <span>Menadzer prodaje</span>
+                <p>Katarina Jovic jedna je od najuspesnijih menadzera prodaje u Srbiji.</p>
               </div>
             </div>
           </div>
@@ -117,9 +117,9 @@
                 </div>
               </div>
               <div class="down-content">
-                <h4>Michael Soft</h4>
-                <span>Chief Marketing</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
+                <h4>Mihajlo Lazic</h4>
+                <span>Direktor</span>
+                <p>Uspesno vodi kompaniju od njenog osnivanja.</p>
               </div>
             </div>
           </div>
@@ -139,9 +139,9 @@
                 </div>
               </div>
               <div class="down-content">
-                <h4>Mary Cool</h4>
-                <span>Product Specialist</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
+                <h4>Marija Colic</h4>
+                <span>Zamenik Direktora</span>
+                <p>Vrlo sposoban i vredan clan naseg tima.</p>
               </div>
             </div>
           </div>
@@ -161,9 +161,9 @@
                 </div>
               </div>
               <div class="down-content">
-                <h4>George Walker</h4>
-                <span>Product Photographer</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
+                <h4>Igor Kostic</h4>
+                <span>Fotograf i dizajner</span>
+                <p>Za prezentaciju nasih proizvoda u punom sjaju zaduzen je nas Igor</p>
               </div>
             </div>
           </div>
@@ -183,67 +183,22 @@
                 </div>
               </div>
               <div class="down-content">
-                <h4>Kate Town</h4>
-                <span>General Manager</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing itaque corporis nulla.</p>
+                <h4>Ivana Danilovic</h4>
+                <span>HR</span>
+                <p>Vodi brigu o nasim zaposlenima kao da su clanovi njene porodice.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-    <div class="services">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="service-item">
-              <div class="icon">
-                <i class="fa fa-gear"></i>
-              </div>
-              <div class="down-content">
-                <h4>Product Management</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at quia quaerat.</p>
-                <a href="#" class="filled-button">Read More</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="service-item">
-              <div class="icon">
-                <i class="fa fa-gear"></i>
-              </div>
-              <div class="down-content">
-                <h4>Customer Relations</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at quia quaerat.</p>
-                <a href="#" class="filled-button">Details</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="service-item">
-              <div class="icon">
-                <i class="fa fa-gear"></i>
-              </div>
-              <div class="down-content">
-                <h4>Global Collection</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at quia quaerat.</p>
-                <a href="#" class="filled-button">Read More</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
     <div class="happy-clients">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="section-heading">
-              <h2>Happy Partners</h2>
+              <h2>Kompanije sa kojima saradjujemo</h2>
             </div>
           </div>
           <div class="col-md-12">
@@ -251,23 +206,23 @@
               <div class="client-item">
                 <img src="assets/images/client-01.png" alt="1">
               </div>
-              
+
               <div class="client-item">
                 <img src="assets/images/client-01.png" alt="2">
               </div>
-              
+
               <div class="client-item">
                 <img src="assets/images/client-01.png" alt="3">
               </div>
-              
+
               <div class="client-item">
                 <img src="assets/images/client-01.png" alt="4">
               </div>
-              
+
               <div class="client-item">
                 <img src="assets/images/client-01.png" alt="5">
               </div>
-              
+
               <div class="client-item">
                 <img src="assets/images/client-01.png" alt="6">
               </div>

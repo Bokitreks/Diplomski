@@ -38,7 +38,7 @@
         <div class="col-md-12">
         <div class="section-heading">
             <h2>Novo u ponudi</h2>
-            <a href="products.html">Pogledaj celu ponudu<i class="fa fa-angle-right"></i></a>
+            <a href="/products">Pogledaj celu ponudu<i class="fa fa-angle-right"></i></a>
         </div>
         </div>
         @foreach ($latestProducts as $product)
@@ -47,7 +47,7 @@
             @endphp
             <div class="col-lg-4 col-md-4 all des">
                 <div class="product-item">
-                    <a href="#"><img src="{{$product->images[0]->href}}" alt=""></a>
+                    <a href="/products/{{$product->id}}"><img src="{{$product->images[0]->href}}" alt=""></a>
                     <div class="down-content">
                         <a href="#"><h4>{{$product->title}}</h4></a>
                         <h6>{{$product->price}} RSD</h6>
@@ -94,7 +94,7 @@
             <li><a href="#">Garancija do cak 6 godina</a></li>
             <li><a href="#">24/7 dostupnost nasih servisera</a></li>
             </ul>
-            <a href="about.html" class="filled-button">Saznaj vise</a>
+            <a href="/contact" class="filled-button">Saznaj vise</a>
         </div>
         </div>
         <div class="col-md-6">
@@ -118,7 +118,7 @@
                 <p>Uveri se i sam u kvalitet nasih proizvoda, sta cekas, pogledaj nas katalog</p>
             </div>
             <div class="col-md-4">
-                <a href="#" class="filled-button">Pogledaj katalog proizvoda</a>
+                <a href="/products" class="filled-button">Pogledaj katalog proizvoda</a>
             </div>
             </div>
         </div>

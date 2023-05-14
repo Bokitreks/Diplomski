@@ -47,6 +47,8 @@
             <li><p>Dostupnost: <label id='green-label'>Dostupan</label></p></li>
         </ul>
         <h3 id='cena-proizvoda'>Cena: <label>{{$product->price}} RSD</label></h3>
+        <br/>
+        <button id="addToCartButton" type="button" class="btn btn-danger">Dodaj u korpu</button>
     </div>
 
     <div id='comments-main-div' class="row">

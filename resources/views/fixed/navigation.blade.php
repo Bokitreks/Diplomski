@@ -41,7 +41,7 @@
           <a id="user-icon" href="#"><i class="fa fa-user"></i></a>
           @if (Session::has('user'))
             <h4 id="username" data-value="{{Session::get('user.id')}}">{{Session::get('user.username')}}</h4>
-            <a id="cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+            <a id="cart" href="{{route('cart')}}"><i class="fa fa-shopping-cart"></i></a>
           @endif
         </div>
       </nav>

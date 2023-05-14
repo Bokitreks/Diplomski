@@ -179,3 +179,19 @@ padding-bottom: 1%;
 #comment-warning {
     color: red;
 }
+#cart-table{
+    padding-top: 8%;
+}
+#cart-table h2{
+    text-align: center;
+    padding: 3%;
+}
+#personal-info-header {
+    text-align: center;
+    padding: 3%;
+}
+#addToCartButton {
+    display: block;
+    margin: auto;
+    margin-top: 2%;
+  }
