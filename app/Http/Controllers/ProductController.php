@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends BaseController
@@ -135,5 +137,29 @@ class ProductController extends BaseController
             default : break;
         }
         return $products->get();
+    }
+
+    public function getProductsAction(Request $request) {
+        $productIds = $request->input('productIds');
+        $products = Product::whereIn('id', $productIds)->get();
+        return response()->json($products, 200);
+    }
+
+    public function confirmOrderAction(Request $request) {
+        $cartItems = $request->input('cartItems');
+        $userId = $request->input('userId');
+        foreach($cartItems as $cartItem) {
+            Cart::create([
+                'user_id' => $userId,
+                'product_id' => (int)$cartItem['productId'],
+                'quantity' => (int)$cartItem['quantity'],
+                'total' => (int)$cartItem['total'],
+                'is_payed' => 0,
+                'shipping' => 0,
+                'is_finished' => 0
+            ]);
+        }
+
+        return response()->json('Porudzbina uspesno potvrdjena !', 200);
     }
 }

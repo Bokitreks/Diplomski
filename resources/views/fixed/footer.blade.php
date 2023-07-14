@@ -39,7 +39,11 @@
     @endif
 
     @if(Route::currentRouteName() === 'showProduct')
-    <script src="{{ asset('assets/js/leaveCommentAction.js') }}"></script>
+    <script src="{{ asset('assets/js/singleProduct.js') }}"></script>
+    @endif
+
+    @if (Route::currentRouteName() === 'cart')
+      <script src="{{asset('assets/js/cart.js')}}"></script>
     @endif
 
     @if (Session::has('user'))

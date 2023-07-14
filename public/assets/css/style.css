@@ -182,7 +182,7 @@ padding-bottom: 1%;
 #cart-table{
     padding-top: 8%;
 }
-#cart-table h2{
+#cart-table h2 {
     text-align: center;
     padding: 3%;
 }
@@ -194,4 +194,7 @@ padding-bottom: 1%;
     display: block;
     margin: auto;
     margin-top: 2%;
-  }
+}
+#shipping-info {
+    display: none;
+}

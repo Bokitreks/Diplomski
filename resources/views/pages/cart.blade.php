@@ -56,26 +56,13 @@
 					<th></th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td>Prozivod 1</td>
-					<td class="price">20000 RSD</td>
-					<td><input type="number" min="1" value="1" class="quantity"></td>
-					<td class="total">10000.00</td>
-					<td><span class="remove-item">X</span></td>
-				</tr>
-				<tr>
-					<td>Prozivod 2</td>
-					<td class="price">20000 RSD</td>
-					<td><input type="number" min="1" value="2" class="quantity"></td>
-					<td class="total">$40.00</td>
-					<td><span class="remove-item">X</span></td>
-				</tr>
+			<tbody id='cart-product-list'>
+
 			</tbody>
 			<tfoot>
 				<tr>
 					<td colspan="3"><strong>Ukupno</strong></td>
-					<td class="cart-total">34000 RSD</td>
+					<td class="cart-total">0 RSD</td>
 					<td></td>
 				</tr>
 			</tfoot>
@@ -84,26 +71,28 @@
         <select id="shippingMethod" name="shippingMethod">
             <option value="0">Preuzimanje u radnji</option>
             <option value="1">Dostava na adresu</option>
-          </select>
-        <h3 id='personal-info-header'>Licni podaci</h3>
-        <form>
-            <div class="form-group">
-              <label for="exampleFormControlInput1">Ime i Prezime</label>
-              <input type="email" class="form-control" id="exampleFormControlInput1">
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Grad/Mesto</label>
+        </select>
+        <div id="shipping-info">
+            <h3 id='personal-info-header'>Licni podaci</h3>
+            <form>
+                <div class="form-group">
+                <label for="exampleFormControlInput1">Ime i Prezime</label>
                 <input type="email" class="form-control" id="exampleFormControlInput1">
-              </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Adresa Stanovanja</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1">
-              </div>
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">Komentar (opciono)</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-          </form>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Grad/Mesto</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Adresa Stanovanja</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1">
+                </div>
+                <div class="form-group">
+                <label for="exampleFormControlTextarea1">Komentar (opciono)</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
         <button id="addToCartButton" type="button" class="btn btn-danger">Potvrdi porudzbinu</button>
 	</div>
 

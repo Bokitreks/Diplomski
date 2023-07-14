@@ -1,6 +1,7 @@
 $('document').ready(function() {
 
-$('#leaveAComment').on('click',addComment);
+$('#leaveAComment').on('click', addComment);
+$('#addToCartButton').on('click', addToCart);
 
 });
 
@@ -41,3 +42,21 @@ function addComment() {
         })
     }
 }
+
+function addToCart() {
+    let productId = $(this).data("id");
+
+    let cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+
+    if (cartProducts.includes(productId)) {
+      alert('Proizvod već postoji u korpi');
+      return;
+    }
+
+    cartProducts.push(productId);
+    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+
+    alert('Proizvod dodat u korpu');
+  }
+
+

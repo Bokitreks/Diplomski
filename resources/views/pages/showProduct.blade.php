@@ -48,7 +48,9 @@
         </ul>
         <h3 id='cena-proizvoda'>Cena: <label>{{$product->price}} RSD</label></h3>
         <br/>
-        <button id="addToCartButton" type="button" class="btn btn-danger">Dodaj u korpu</button>
+        @if (Session::has('user'))
+            <button id="addToCartButton" type="button" class="btn btn-danger" data-id="{{$product->id}}">Dodaj u korpu</button>
+        @endif
     </div>
 
     <div id='comments-main-div' class="row">

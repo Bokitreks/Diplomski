@@ -27,10 +27,12 @@ Route::prefix('user')->group(function () {
 });
 Route::prefix('products')->group(function () {
     Route::get('/getAllProducts',[ProductController::class,'getAllProductsAction'])->name('getAllProductsAction');
+    Route::get('/getProducts',[ProductController::class,'getProductsAction'])->name('getProductsAction');
     Route::get('/getSigurnosnaVrata',[ProductController::class,'getSigurnosnaVrataAction'])->name('getSigurnosnaVrataAction');
     Route::get('/getSobnaVrata',[ProductController::class,'getSobnaVrataAction'])->name('getSobnaVrataAction');
     Route::get('/getPvcStolarija',[ProductController::class,'getPvcStolarijaAction'])->name('getPvcStolarijaAction');
     Route::post('/sortProducts',[ProductController::class,'sortProductsAction'])->name('sortProductsAction');
+    Route::post('/confirmOrder',[ProductController::class,'confirmOrderAction'])->name('confirmOrderAction');
 });
 Route::prefix('reviews')->group(function() {
     Route::post('/writeReview',[ReviewController::class, 'create'])->name('WriteReviewAction');
