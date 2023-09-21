@@ -23,18 +23,13 @@
     <div class="row">
         <div class="col-md-12">
         <div class="filters">
-            <ul>
-                <li><a href="" class="productCategoryLink" id="getAllProducts">Svi prozivodi</a></li>
-                <li><a href="" class="productCategoryLink" id="getSigurnosnaVrata">Sigurnosna vrata</a></li>
-                <li><a href="" class="productCategoryLink" id="getSobnaVrata">Sobna vrata</a></li>
-                <li><a href="" class="productCategoryLink" id="getPvcStolarija">PVC Stolarija</a></li>
+            <ul id='categories-list'>
             </ul>
         </div>
         <div class="row" id='sort-fields'>
             <div class="col-md-6"></div>
             <div id="sort-div" class="col-md-6">
                 <select class="sort" name="sort" id="sort">
-                    <option value="0">Sortiraj</option>
                     <option value="1">Najnovije</option>
                     <option value="2">Po ceni rastuce</option>
                     <option value="3">Po ceni opadajuce</option>

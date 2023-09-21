@@ -1,69 +1,37 @@
-$('document').ready(function() {
-    $('#getAllProducts').on('click',getAllProducts);
-    $('#getSigurnosnaVrata').on('click',getSigurnosnaVrata);
-    $('#getSobnaVrata').on('click',getSobnaVrata);
-    $('#getPvcStolarija').on('click',getPvcStolarija);
-    $('#sort').on('change',sortProducts);
+$(document).ready(function() {
+    let filter = localStorage.getItem('filter') || 'sviProizvodi';
+    let sort = localStorage.getItem('sort') || 1;
+    $('#sort').val(sort);
 
-    localStorage.removeItem('filter');
-    localStorage.setItem('filter', 'sviProizvodi');
+    loadProducts(filter, sort);
+    getAllCategories();
+
+    $('#sort').on('change', function() {
+        sort = this.value;
+        localStorage.setItem('sort', sort);
+        loadProducts(filter, sort);
+    });
+
+    $(document).on('click', '.productCategoryLink', function(e) {
+        e.preventDefault();
+        filter = $(this).attr('id');
+        localStorage.setItem('filter', filter);
+        loadProducts(filter, sort);
+    });
 });
 
-function getAllProducts(e) {
-    e.preventDefault();
+function loadProducts(filter, sort) {
     $.ajax({
-        url: "/api/products/getAllProducts",
-        method: "GET",
-        success: function (data) {
+        url: "/api/products/sortProducts",
+        method: "POST",
+        data: {
+            'filter': filter,
+            'sort': sort
+        },
+        success: function(data) {
             printProducts(data);
-            localStorage.setItem('filter', 'sviProizvodi');
         },
-        error: function (xhr, status, error) {
-            console.log(xhr);
-        },
-    });
-}
-
-function getSigurnosnaVrata(e) {
-    e.preventDefault();
-    $.ajax({
-        url: "/api/products/getSigurnosnaVrata",
-        method: "GET",
-        success: function (data) {
-            printProducts(data);
-            localStorage.setItem('filter', 'sigurnosnaVrata');
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr);
-        },
-    });
-}
-
-function getSobnaVrata(e) {
-    e.preventDefault();
-    $.ajax({
-        url: "/api/products/getSobnaVrata",
-        method: "GET",
-        success: function (data) {
-            printProducts(data);
-            localStorage.setItem('filter', 'sobnaVrata');
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr);
-        },
-    });
-}
-
-function getPvcStolarija(e) {
-    e.preventDefault();
-    $.ajax({
-        url: "/api/products/getPvcStolarija",
-        method: "GET",
-        success: function (data) {
-            printProducts(data);
-            localStorage.setItem('filter', 'pvcStolarija');
-        },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
             console.log(xhr);
         },
     });
@@ -102,7 +70,7 @@ function printProducts(data) {
 
 function sortProducts() {
     let filter = localStorage.getItem('filter');
-    let sort = this.value;
+    let sort = localStorage.getItem('sort');
     $.ajax({
         url: "/api/products/sortProducts",
         method: "POSt",
@@ -117,4 +85,26 @@ function sortProducts() {
             console.log(xhr);
         },
     });
+}
+
+function getAllCategories() {
+    $.ajax({
+        url: "/api/categories/getAllCategories",
+        method: "GET",
+        success: function (data) {
+            loadCategories(data);
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr);
+        },
+    });
+}
+
+function loadCategories(data) {
+    let categoriesList = $('#categories-list');
+    let print = ' <li><a href="" class="productCategoryLink" id="0">Svi prozivodi</a></li>';
+    data.forEach(category => {
+        print += ` <li><a href="" class="productCategoryLink" id=${category.id}>${category.category_name}</a></li>`;
+    });
+    categoriesList.html(print);
 }

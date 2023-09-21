@@ -77,19 +77,19 @@
             <form>
                 <div class="form-group">
                 <label for="exampleFormControlInput1">Ime i Prezime</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1">
+                <input type="email" class="form-control" id="cartName">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Grad/Mesto</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1">
+                    <input type="email" class="form-control" id="cartCity">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Adresa Stanovanja</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1">
+                    <input type="email" class="form-control" id="cartAddress">
                 </div>
                 <div class="form-group">
                 <label for="exampleFormControlTextarea1">Komentar (opciono)</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" id="cartComment" rows="3"></textarea>
                 </div>
             </form>
         </div>

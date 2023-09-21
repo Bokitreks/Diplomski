@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
@@ -34,3 +35,5 @@ Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::get('/login', [UserController::class, 'login'])->name('login');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+Route::get('/admin',[AdminController::class, 'index'])->name('admin');

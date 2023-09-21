@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\CartShippingInfo;
 use App\Models\Product;
+use App\Models\ShippingInfo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends BaseController
 {
@@ -91,40 +94,21 @@ class ProductController extends BaseController
 
     public function getAllProductsAction()
     {
-        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->get();
+        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews', 'materials')->get();
     }
 
-    public function getSigurnosnaVrataAction()
-    {
-        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',1)->get();
-    }
-
-    public function getSobnaVrataAction()
-    {
-        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',2)->get();
-    }
-
-    public function getPvcStolarijaAction()
-    {
-        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',3)->get();
-    }
     public function sortProductsAction(Request $request) {
         $filter = $request->input('filter');
         $sort = $request->input('sort');
         $products = [];
 
-        switch($filter) {
-            case 'sviProizvodi': $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews');
-            break;
-            case 'sigurnosnaVrata': $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',1);
-            break;
-            case 'sobnaVrata': $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',2);
-            break;
-            case 'pvcStolarija': $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id',3);
-            break;
-            default : $products = $this->getAllProductsAction();
+        if($filter == 0) {
+            $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews');
         }
-        // dd($products);
+        else {
+            $products = Product::with('category', 'manufacturer', 'color', 'images', 'reviews')->where('category_id', $filter);
+        }
+
         switch($sort) {
             case '1': $products->orderBy('created_at', 'DESC');
             break;
@@ -145,7 +129,7 @@ class ProductController extends BaseController
         return response()->json($products, 200);
     }
 
-    public function confirmOrderAction(Request $request) {
+    public function confirmOrderWithoutShippingAction(Request $request) {
         $cartItems = $request->input('cartItems');
         $userId = $request->input('userId');
         foreach($cartItems as $cartItem) {
@@ -162,4 +146,58 @@ class ProductController extends BaseController
 
         return response()->json('Porudzbina uspesno potvrdjena !', 200);
     }
+
+    public function confirmOrderWithShippingAction(Request $request) {
+        $cartItems = $request->input('cartItems');
+        $userId = $request->input('userId');
+        $name = $request->input('name');
+        $city = $request->input('city');
+        $address = $request->input('address');
+        $comment = $request->input('comment');
+
+        $shippingInfo = [
+            'user_id' => $userId,
+            'name_surname' => $name,
+            'city' => $city,
+            'address' => $address,
+            'comment' => $comment,
+        ];
+
+        $cartIds = [];
+
+        DB::beginTransaction();
+
+        try {
+            foreach ($cartItems as $cartItem) {
+                // Create a new Cart record
+                $cart = Cart::create([
+                    'user_id' => $userId,
+                    'product_id' => (int) $cartItem['productId'],
+                    'quantity' => (int) $cartItem['quantity'],
+                    'total' => (int) $cartItem['total'],
+                    'is_payed' => 0,
+                    'shipping' => 1,
+                    'is_finished' => 0,
+                ]);
+
+                $cartIds[] = $cart->id;
+            }
+
+            $shippingInfoRecord = ShippingInfo::create($shippingInfo);
+            foreach ($cartIds as $cartId) {
+                CartShippingInfo::create([
+                    'cart_id' => $cartId,
+                    'shippingInfo_id' => $shippingInfoRecord->id,
+                ]);
+            }
+            DB::commit();
+
+            return response()->json(['message' => 'Order has been placed successfully'], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['message' => 'Order placement failed'], 500);
+        }
+    }
+
 }

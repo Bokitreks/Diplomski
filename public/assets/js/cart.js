@@ -93,6 +93,8 @@ $(document).ready(function() {
 
   function confirmOrder() {
     let productIds = JSON.parse(localStorage.getItem('cartProducts'));
+    let shippingMethod = $('#shippingMethod').val();
+    if(productIds && productIds.length > 0) {
     let cartItems = [];
     let username = document.querySelector("#username");
     let userId = username.dataset.value;
@@ -101,25 +103,56 @@ $(document).ready(function() {
         const total = parseFloat($('#cart-product-list').find(`[data-id="${productId}"] .total`).text());
         cartItems.push({ productId, quantity, total });
     });
-    console.log( cartItems);
-    if (cartItems.length > 0) {
-      $.ajax({
-        url: 'api/products/confirmOrder',
-        method: 'POST',
-        data: {
-            'userId' : userId,
-            'cartItems': cartItems,
-        },
-        success: function(response) {
-          console.log(response);
-          alert('Potvrdjena porudzbina !');
-          localStorage.removeItem('cartProducts');
-          location.reload();
-        },
-        error: function(xhr, status, error) {
-          console.log(error);
-          alert('Greska prilikom potvrde, pokusajte ponovo');
-        }
-      });
+    if(shippingMethod == 0) {
+        $.ajax({
+            url: 'api/products/confirmOrderWithoutShipping',
+            method: 'POST',
+            data: {
+                'userId' : userId,
+                'cartItems': cartItems,
+            },
+            success: function(response) {
+              console.log(response);
+              alert('Potvrdjena porudzbina !');
+              localStorage.removeItem('cartProducts');
+              location.reload();
+            },
+            error: function(xhr, status, error) {
+              console.log(error);
+              alert('Greska prilikom potvrde, pokusajte ponovo');
+            }
+          });
+    } else {
+        let name = $('#cartName').val();
+        let city = $('#cartCity').val();
+        let address = $('#cartAddress').val();
+        let comment = $('#cartComment').val();
+
+        $.ajax({
+            url: 'api/products/confirmOrderWithShipping',
+            method: 'POST',
+            data: {
+                'userId' : userId,
+                'name' : name,
+                'city' : city,
+                'address' : address,
+                'comment' : comment,
+                'cartItems': cartItems,
+            },
+            success: function(response) {
+              console.log(response);
+              alert('Potvrdjena porudzbina !');
+              localStorage.removeItem('cartProducts');
+              location.reload();
+            },
+            error: function(xhr, status, error) {
+              console.log(error);
+              alert('Greska prilikom potvrde, pokusajte ponovo');
+            }
+          });
+    }
+    }
+    else {
+        alert('Korpa je prazna!');
     }
   }
