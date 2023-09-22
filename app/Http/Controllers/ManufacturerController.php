@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Manufacturer;
 use Illuminate\Http\Request;
 
 class ManufacturerController extends BaseController
@@ -59,5 +60,8 @@ class ManufacturerController extends BaseController
     public function destroy($id)
     {
         //
+    }
+    public function getAllManufacturersAction() {
+        return Manufacturer::all();
     }
 }

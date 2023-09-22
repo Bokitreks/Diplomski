@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
 class WarehouseController extends BaseController
@@ -80,5 +81,9 @@ class WarehouseController extends BaseController
     public function destroy($id)
     {
         //
+    }
+
+    public function getAllWarehousesAction() {
+        return Warehouse::all();
     }
 }

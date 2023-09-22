@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductMaterial extends Model
 {
     use HasFactory;
+    protected $fillable = ['product_id','material_id'];
 
     public function materials() {
         return $this->hasMany(Material::class, 'id', 'material_id');

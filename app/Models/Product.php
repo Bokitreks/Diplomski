@@ -12,6 +12,8 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = ['title','description','color_id','category_id','manufacturer_id','price'];
+
     protected $appends = ['avarageStar'];
 
     public function getAvarageStarAttribute() {

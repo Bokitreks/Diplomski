@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ColorController;
+use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +37,11 @@ Route::prefix('user')->group(function () {
 Route::prefix('products')->group(function () {
     Route::get('/getAllProducts',[ProductController::class,'getAllProductsAction'])->name('getAllProductsAction');
     Route::get('/getProducts',[ProductController::class,'getProductsAction'])->name('getProductsAction');
+    Route::post('/addNewProduct',[ProductController::class,'addNewProductAction'])->name('addNewProductAction');
     Route::post('/sortProducts',[ProductController::class,'sortProductsAction'])->name('sortProductsAction');
     Route::post('/confirmOrderWithoutShipping',[ProductController::class,'confirmOrderWithoutShippingAction'])->name('confirmOrderWithoutShippingAction');
     Route::post('/confirmOrderWithShipping',[ProductController::class,'confirmOrderWithShippingAction'])->name('confirmOrderWithShippingAction');
+    Route::delete('/deleteProduct',[ProductController::class,'deleteProductAction'])->name('deleteProductAction');
 });
 Route::prefix('reviews')->group(function() {
     Route::post('/writeReview',[ReviewController::class, 'create'])->name('WriteReviewAction');
@@ -46,5 +52,15 @@ Route::prefix('categories')->group(function() {
     Route::post('/addCategory',[CategoryController::class, 'addCategoryAction'])->name('addCategoryAction');
     Route::post('/editCategory',[CategoryController::class, 'editCategoryAction'])->name('editCategoryAction');
 });
-
-
+Route::prefix('manufacturers')->group(function() {
+    Route::get('/getAllManufacturers',[ManufacturerController::class, 'getAllManufacturersAction'])->name('getAllManufacturersAction');
+});
+Route::prefix('colors')->group(function() {
+    Route::get('/getAllColors',[ColorController::class, 'getAllColorsAction'])->name('getAllColorsAction');
+});
+Route::prefix('materials')->group(function() {
+    Route::get('/getAllMaterials',[MaterialController::class, 'getAllMaterialsAction'])->name('getAllMaterialsAction');
+});
+Route::prefix('warehouses')->group(function() {
+    Route::get('/getAllWarehouses',[WarehouseController::class, 'getAllWarehousesAction'])->name('getAllWarehousesAction');
+});

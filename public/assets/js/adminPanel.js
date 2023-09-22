@@ -29,6 +29,13 @@ $(document).ready(function() {
         var hiddenForm = $('#addProductForm');
         if (hiddenForm.is(":hidden")) {
             hiddenForm.show();
+            getAllCategories();
+            getAllColors();
+            getAllWarehouses();
+            getAllManufacturers();
+            getAllMaterials();
+            getAllCategoriesForAddProduct();
+            getAllWarehouses();
         } else {
             hiddenForm.hide();
         }
@@ -183,7 +190,6 @@ $('#users-table').on('click', '.delete-btn', function() {
 
 }
 
-// Add a click event handler for the "Dodaj novog korisnika" button
 $('#addNewUserButton').click(function() {
     var newName = $('#newName').val();
     var newPassword = $('#newPassword').val();
@@ -386,7 +392,7 @@ function populateProductsTable(products) {
         </td>
         <td>
           <button class="btn btn-sm btn-primary edit-btn">Izmeni</button>
-          <button class="btn btn-sm btn-danger delete-btn">Obrisi</button>
+          <button class="btn btn-sm btn-danger delete-btn" data-product-id="${product.id}">Obrisi</button>
         </td>
       </tr>
       <tr>
@@ -419,4 +425,164 @@ function populateProductsTable(products) {
     });
 
     productsTable.html(data);
+
+$('#products-table').on('click', '.delete-btn', function() {
+    var productId = $(this).data('product-id');
+    var csrfTokenInput = document.querySelector('input[name="_token"]');
+    var csrfToken = csrfTokenInput.value;
+
+    if (confirm("Jel ste sigurni da zelite da obrisete proizvod?")) {
+        $.ajax({
+            url: 'api/products/deleteProduct',
+            method: 'DELETE',
+            data: {
+                '_token': csrfToken,
+                'productId': productId,
+            },
+            success: function(response) {
+                console.log(response);
+                alert(response);
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+                alert(xhr.responseText);
+            }
+        });
+    }
+});
 }
+
+function getAllManufacturers() {
+    let manufacturerSelect = $('#newManufacturerSelect');
+    $.ajax({
+        url: 'api/manufacturers/getAllManufacturers',
+        method: 'GET',
+        success: function(manufacturers) {
+            let data = '';
+            manufacturers.forEach(manufacturer => {
+                data += `<option value="${manufacturer.id}">${manufacturer.manufacturer_name}</option>`;
+            });
+            manufacturerSelect.html(data);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function getAllColors() {
+    let colorSelect = $('#newColorSelect');
+    $.ajax({
+        url: 'api/colors/getAllColors',
+        method: 'GET',
+        success: function(colors) {
+            let data = '';
+            colors.forEach(color => {
+                data += `<option value="${color.id}">${color.color}</option>`;
+            });
+            colorSelect.html(data);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function getAllMaterials() {
+    let materialSelect = $('#newMaterialSelect');
+    $.ajax({
+        url: 'api/materials/getAllMaterials',
+        method: 'GET',
+        success: function(materials) {
+            console.log(materials);
+            let data = '';
+            materials.forEach(material => {
+                data += `<option value="${material.id}">${material.material}</option>`;
+            });
+            materialSelect.html(data);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function getAllWarehouses() {
+    let warehouseSelect = $('#newWarehouseSelect');
+    $.ajax({
+        url: 'api/warehouses/getAllWarehouses',
+        method: 'GET',
+        success: function(warehouses) {
+            let data = '';
+            warehouses.forEach(warehouse => {
+                data += `<option value="${warehouse.id}">${warehouse.warehouse_name}</option>`;
+            });
+            warehouseSelect.html(data);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function getAllCategoriesForAddProduct() {
+    let categoriesSelect = $('#newCategorySelect');
+    $.ajax({
+        url: 'api/categories/getAllCategories',
+        method: 'GET',
+        success: function(categories) {
+            let data = '';
+            categories.forEach(category => {
+                data += `<option value="${category.id}">${category.category_name}</option>`;
+            });
+            categoriesSelect.html(data);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+$('#addNewProductButton').click(function() {
+    var productName = $('#newProductName').val();
+    var productDescription = $('#newProductDescription').val();
+    var productPrice = $('#newPrice').val();
+    var productCategory = $('#newCategorySelect').val();
+    var productManufacturer = $('#newManufacturerSelect').val();
+    var productColor = $('#newColorSelect').val();
+    var productMaterials = $('#newMaterialSelect').val();
+    var productWarehouse = $('#newWarehouseSelect').val();
+    var productStock = $('#newStock').val();
+    var productImage = $('#newImage')[0].files[0];
+
+    var data = new FormData();
+    data.append('productName', productName);
+    data.append('productDescription', productDescription);
+    data.append('productPrice', productPrice);
+    data.append('productCategory', productCategory);
+    data.append('productManufacturer', productManufacturer);
+    data.append('productColor', productColor);
+    data.append('productMaterials', productMaterials);
+    data.append('productWarehouse', productWarehouse);
+    data.append('productStock', productStock);
+    data.append('productImage', productImage);
+    console.log(data);
+    $.ajax({
+        url: 'api/products/addNewProduct',
+        method: 'POST',
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            console.log(response);
+            alert(response);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.log(xhr);
+            alert(xhr.responseText);
+        }
+    });
+});
+
+

@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartShippingInfo;
+use App\Models\Image;
+use App\Models\Material;
 use App\Models\Product;
+use App\Models\ProductMaterial;
 use App\Models\ShippingInfo;
+use App\Models\Warehouse;
+use App\Models\WarehouseProduct;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -199,5 +204,83 @@ class ProductController extends BaseController
             return response()->json(['message' => 'Order placement failed'], 500);
         }
     }
+
+    public function addNewProductAction(Request $request)
+    {
+        try {
+            $request->validate([
+                'productName' => 'required|string',
+                'productDescription' => 'required|string',
+                'productPrice' => 'required|numeric',
+                'productCategory' => 'required|integer',
+                'productManufacturer' => 'required|integer',
+                'productColor' => 'required|integer',
+                'productMaterials' => 'required',
+                'productWarehouse' => 'required|integer',
+                'productStock' => 'required|integer',
+                'productImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            if ($request->hasFile('productImage')) {
+                $image = $request->file('productImage');
+                $imagePath = $image->move('assets/images/products/', $image->getClientOriginalName());
+            }
+
+            $product = Product::create([
+                'title' => $request->input('productName'),
+                'description' => $request->input('productDescription'),
+                'price' => $request->input('productPrice'),
+                'category_id' => $request->input('productCategory'),
+                'manufacturer_id' => $request->input('productManufacturer'),
+                'color_id' => $request->input('productColor')
+            ]);
+
+            $materialIds = explode(',', $request->input('productMaterials'));
+            foreach ($materialIds as $materialId) {
+                ProductMaterial::create([
+                    'product_id' => $product->id,
+                    'material_id' => $materialId
+                ]);
+            }
+
+            WarehouseProduct::create([
+                'warehouse_id' => $request->input('productWarehouse'),
+                'product_id' => $product->id,
+                'quantity' => $request->input('productStock')
+            ]);
+
+            Image::create([
+                'product_id' => $product->id,
+                'href' => $imagePath ?? null,
+                'alt' => $image->getFilename()
+            ]);
+
+            return response()->json('Proizvod uspesno dodat!');
+        } catch (\Exception $e) {
+            return response()->json('Greska prilikom dodavanja proizvoda', 500);
+        }
+    }
+
+    public function deleteProductAction(Request $request)
+    {
+        $productId = $request->input('productId');
+    try {
+        $product = Product::find($productId);
+
+        if (!$product) {
+            return response()->json('Proizvod nije pronađen', 404);
+        }
+
+        ProductMaterial::where('product_id', $productId)->delete();
+        WarehouseProduct::where('product_id', $productId)->delete();
+        Image::where('product_id', $productId)->delete();
+
+        $product->delete();
+
+        return response()->json('Proizvod uspesno obrisan');
+    } catch (\Exception $e) {
+        return response()->json('Greska prilikom brisanja proizvoda', 500);
+    }
+}
 
 }

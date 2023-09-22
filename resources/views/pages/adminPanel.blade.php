@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/adminPanel.css">
 </head>
 <body>
 
@@ -100,30 +101,61 @@
         </tbody>
       </table>
       <div class="mt-3">
-        <button class="btn btn-success" id="addOrderBtn">Dodaj novi proizvod</button>
+        <button class="btn btn-success" id="addProductBtn">Dodaj novi proizvod</button>
       </div>
-      <div class="mt-3" id="addOrderForm" style="display: none;">
+      <div class="mt-3" id="addProductForm" style="display: none;">
         <h4>Dodaj novi proizvod</h4>
         <form>
-          <div class="form-group">
-            <label for="newName">Name</label>
-            <input type="text" class="form-control" id="newName">
-          </div>
-          <div class="form-group">
-            <label for="newPrice">Price</label>
-            <input type="text" class="form-control" id="newPrice">
-          </div>
-          <div class="form-group">
-            <label for="newCategory">Category</label>
-            <input type="text" class="form-control" id="newCategory">
-          </div>
-          <div class="form-group">
-            <label for="newImage">Image Thumbnail</label>
-            <input type="file" class="form-control-file" id="newImage">
-            <small class="form-text text-muted">Choose an image for the new product.</small>
-          </div>
-          <button type="submit" class="btn btn-primary">Add Product</button>
+            <div class="form-group">
+                <label for="newName">Naziv</label>
+                <input type="text" class="form-control" id="newProductName">
+            </div>
+            <div class="form-group">
+                <label for="newPrice">Opis</label>
+                <br />
+                <textarea name="productDescription" id="newProductDescription" cols="30" rows="10"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="newPrice">Cena</label>
+                <input type="text" class="form-control" id="newPrice">
+            </div>
+            <div class="form-group">
+                <label for="newCategory">Kategorija</label>
+                <select class="form-control" id="newCategorySelect">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="newManufacturer">Proizvodjac</label>
+                <select class="form-control" id="newManufacturerSelect">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="newColor">Boja</label>
+                <select class="form-control" id="newColorSelect">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="newMaterial">Materijal</label>
+                <select class="form-control" id="newMaterialSelect" multiple>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="newColor">Magacin</label>
+                <select class="form-control" id="newWarehouseSelect">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="newStock">Kolicina na stanju</label>
+                <input type="text" class="form-control" id="newStock">
+            </div>
+            <div class="form-group">
+                <label for="newImage">Slika</label>
+                <input type="file" class="form-control-file" id="newImage">
+                <small class="form-text text-muted">Izaberite sliku proizvoda</small>
+            </div>
+            <button type="button" class="btn btn-primary" id="addNewProductButton">Dodaj proizvod</button>
         </form>
+
       </div>
 
     </div>
@@ -214,7 +246,7 @@
           </tbody>
         </table>
         <div class="mt-3">
-          <button class="btn btn-success" id="addProductBtn">Add New Product</button>
+          <button class="btn btn-success" id="addProductBtn1">Add New Product</button>
         </div>
         <div class="mt-3" id="addProductForm" style="display: none;">
           <h4>Add New Product</h4>
