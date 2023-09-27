@@ -69,7 +69,7 @@
                     <input type="text" class="form-control" id="newEmail">
                 </div>
                 <div class="form-group">
-                    <label for="newRoleId">Uloga</label>
+                    <label for="newRoleId">Uloga(1-korisnik/2-administrator)</label>
                     <input type="text" class="form-control" id="newRoleId">
                 </div>
                 <button type="button" class="btn btn-primary" id="addNewUserButton">Dodaj novog korisnika</button>
@@ -190,87 +190,24 @@
       </div>
 
     <div class="tab-pane fade" id="pages">
-        <h2>Edit Products</h2>
+        <h2>Upravljanje narudzbenicama</h2>
         <table class="table">
           <thead>
             <tr>
+              <th>Datum</th>
               <th>ID</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Image</th>
-              <th>Actions</th>
+              <th>Korisnik</th>
+              <th>Proizvod</th>
+              <th>Kolicina</th>
+              <th>Dostava</th>
+              <th>Placeno</th>
+              <th>Isporuceno</th>
+              <th>Akcije</th>
             </tr>
           </thead>
-          <tbody id='products-table'>
-            <tr>
-              <td>1</td>
-              <td>Product A</td>
-              <td>$19.99</td>
-              <td>Electronics</td>
-              <td>
-                <img src="product-a-thumbnail.jpg" alt="Product A Thumbnail" width="50">
-              </td>
-              <td>
-                <button class="btn btn-sm btn-primary edit-btn">Edit</button>
-                <button class="btn btn-sm btn-danger delete-btn">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="6">
-                <div class="hidden-form" style="display: none;">
-                  <h4>Edit Product</h4>
-                  <form>
-                    <div class="form-group">
-                      <label for="editName">Name</label>
-                      <input type="text" class="form-control" id="editName">
-                    </div>
-                    <div class="form-group">
-                      <label for="editPrice">Price</label>
-                      <input type="text" class="form-control" id="editPrice">
-                    </div>
-                    <div class="form-group">
-                      <label for="editCategory">Category</label>
-                      <input type="text" class="form-control" id="editCategory">
-                    </div>
-                    <div class="form-group">
-                      <label for="editImage">Image Thumbnail</label>
-                      <input type="file" class="form-control-file" id="editImage">
-                      <small class="form-text text-muted">Choose a new image for the product.</small>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                  </form>
-                </div>
-              </td>
-            </tr>
+          <tbody id='cart-table'>
           </tbody>
         </table>
-        <div class="mt-3">
-          <button class="btn btn-success" id="addProductBtn1">Add New Product</button>
-        </div>
-        <div class="mt-3" id="addProductForm" style="display: none;">
-          <h4>Add New Product</h4>
-          <form>
-            <div class="form-group">
-              <label for="newName">Name</label>
-              <input type="text" class="form-control" id="newName">
-            </div>
-            <div class="form-group">
-              <label for="newPrice">Price</label>
-              <input type="text" class="form-control" id="newPrice">
-            </div>
-            <div class="form-group">
-              <label for="newCategory">Category</label>
-              <input type="text" class="form-control" id="newCategory">
-            </div>
-            <div class="form-group">
-              <label for="newImage">Image Thumbnail</label>
-              <input type="file" class="form-control-file" id="newImage">
-              <small class="form-text text-muted">Choose an image for the new product.</small>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Product</button>
-          </form>
-        </div>
     </div>
   </div>
 </div>

@@ -44,13 +44,23 @@
                 @endif
                 @endfor
             </p></li>
-            <li><p>Dostupnost: <label id='green-label'>Dostupan</label></p></li>
+            <li>
+                <p>Dostupnost:
+                    @php
+                        $quantityCount = 0;
+                        foreach ($product->warehouseProducts as $warehouseProduct) {
+                            $quantityCount += $warehouseProduct->pivot->quantity;
+                        }
+                        echo $quantityCount ? '<label id="green-label">Dostupan</label>' : '<label id="red-label">Nema na stanju</label>';
+                    @endphp
+                </p>
+            </li>
         </ul>
         <h3 id='cena-proizvoda'>Cena: <label>{{$product->price}} RSD</label></h3>
         <br/>
         @if (Session::has('user'))
-            <button id="addToCartButton" type="button" class="btn btn-danger" data-id="{{$product->id}}">Dodaj u korpu</button>
-        @endif
+        <button id="addToCartButton" type="button" class="btn btn-danger" data-quantity="{{$product->warehouseProducts[0]->pivot->quantity}}" data-id="{{$product->id}}" @if ($quantityCount <= 0) disabled @endif>Dodaj u korpu</button>
+    @endif
     </div>
 
     <div id='comments-main-div' class="row">
@@ -59,6 +69,9 @@
 
             <h4>Komentari</h4>
             <div class="row">
+                @if (count($product->reviews) === 0)
+                <h7>Nema komentara</h7>
+                 @else
                 @foreach ($product->reviews as $review)
                 <div id='review-block' class="col-lg-12">
                     <p>Korisnik : {{$review->user->username}} </p>
@@ -81,7 +94,17 @@
                     </p>
                         @endif
                     </div>
+                    @if (Session::has('user'))
+                    @php
+                        $user = Session::get('user');
+                        $userRole = $user['role_id'];
+                    @endphp
+                    @if ($userRole == 2)
+                        <button type="button" class="btn btn-danger deleteCommentButton" data-review-id="{{$review->id}}" style="width: 40%;">Obrisi komentar</button>
+                    @endif
+                @endif
                 @endforeach
+                @endif
             </div>
         </div>
 
@@ -98,7 +121,7 @@
                 <button id="leaveAComment" type="button" class="btn btn-primary">Postavi komentar</button>
             </div>
             @else
-                <h6 id='comment-warning'>Uloguj se da bi ostavio komentar</h6>
+                <h6 id='comment-warning'>Uloguj se da bi ostavio komentar ili dodao proizvod u korpu</h6>
             @endif
         </div>
 

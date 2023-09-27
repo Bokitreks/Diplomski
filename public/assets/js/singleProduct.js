@@ -2,7 +2,7 @@ $('document').ready(function() {
 
 $('#leaveAComment').on('click', addComment);
 $('#addToCartButton').on('click', addToCart);
-
+$('.deleteCommentButton').on('click', deleteReview);
 });
 
 
@@ -47,16 +47,43 @@ function addToCart() {
     let productId = $(this).data("id");
 
     let cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+    let maxQuantity = parseInt($(this).data("quantity"));
 
-    if (cartProducts.includes(productId)) {
-      alert('Proizvod već postoji u korpi');
-      return;
+    let productExists = false;
+
+    cartProducts.forEach(cartProduct => {
+        console.log(cartProduct);
+        if (cartProduct[0] == productId) {
+            alert('Proizvod vec postoji u korpi');
+            productExists = true;
+            return false;
+        }
+    });
+
+    if (!productExists) {
+        cartProducts.push([productId, maxQuantity]);
+        localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+        alert('Proizvod dodat u korpu');
     }
+}
 
-    cartProducts.push(productId);
-    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+function deleteReview() {
+    var reviewId = $(this).data("review-id");
+    $.ajax({
+        url: '/api/reviews/deleteReview',
+        method: 'DELETE',
+        data: { "reviewId" : reviewId },
+        success: function (response) {
+            alert(response);
+            location.reload();
+        },
+        error: function (xhr, status, error) {
+            alert(xhr);
+        }
+    });
+}
 
-    alert('Proizvod dodat u korpu');
-  }
+
+
 
 

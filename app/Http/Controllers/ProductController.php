@@ -11,6 +11,7 @@ use App\Models\ProductMaterial;
 use App\Models\ShippingInfo;
 use App\Models\Warehouse;
 use App\Models\WarehouseProduct;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,31 +26,8 @@ class ProductController extends BaseController
     public function index()
     {
         $this->data['products'] = Product::with('category', 'manufacturer', 'color', 'images', 'reviews.user')->get();
-      //dd($this->data['products']);
         return view('pages.products', $this->data);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -58,48 +36,14 @@ class ProductController extends BaseController
      */
     public function showProduct($id)
     {
-        $this->data['product'] = Product::with('category', 'manufacturer', 'color', 'images', 'reviews','color', 'product_materials.materials')->find($id);
+        $this->data['product'] = Product::with('category', 'manufacturer', 'color', 'images', 'reviews','color', 'product_materials.materials','warehouseProducts')->find($id);
         return view('pages.showProduct', $this->data);
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function getAllProductsAction()
     {
-        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews', 'materials')->get();
+        return Product::with('category', 'manufacturer', 'color', 'images', 'reviews', 'materials', 'warehouseProducts')->get();
     }
 
     public function sortProductsAction(Request $request) {
@@ -147,6 +91,13 @@ class ProductController extends BaseController
                 'shipping' => 0,
                 'is_finished' => 0
             ]);
+
+            $warehouseProduct = WarehouseProduct::where('product_id', (int)$cartItem['productId'])->first();
+
+            if ($warehouseProduct) {
+                $newQuantity = max(0, $warehouseProduct->quantity - (int)$cartItem['quantity']);
+                $warehouseProduct->update(['quantity' => $newQuantity]);
+            }
         }
 
         return response()->json('Porudzbina uspesno potvrdjena !', 200);
@@ -159,6 +110,10 @@ class ProductController extends BaseController
         $city = $request->input('city');
         $address = $request->input('address');
         $comment = $request->input('comment');
+
+        if ($comment == null) {
+            $comment = "Nema";
+        }
 
         $shippingInfo = [
             'user_id' => $userId,
@@ -174,7 +129,6 @@ class ProductController extends BaseController
 
         try {
             foreach ($cartItems as $cartItem) {
-                // Create a new Cart record
                 $cart = Cart::create([
                     'user_id' => $userId,
                     'product_id' => (int) $cartItem['productId'],
@@ -186,6 +140,13 @@ class ProductController extends BaseController
                 ]);
 
                 $cartIds[] = $cart->id;
+
+                $warehouseProduct = WarehouseProduct::where('product_id', (int)$cartItem['productId'])->first();
+
+                if ($warehouseProduct) {
+                    $newQuantity = max(0, $warehouseProduct->quantity - (int)$cartItem['quantity']);
+                    $warehouseProduct->update(['quantity' => $newQuantity]);
+                }
             }
 
             $shippingInfoRecord = ShippingInfo::create($shippingInfo);
@@ -197,11 +158,11 @@ class ProductController extends BaseController
             }
             DB::commit();
 
-            return response()->json(['message' => 'Order has been placed successfully'], 200);
+            return response()->json(['message' => 'Uspesno potvrdjena narudzbina !'], 200);
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['message' => 'Order placement failed'], 500);
+            return response()->json(['message' => 'Greska prilikom potvrde'], 500);
         }
     }
 
@@ -274,6 +235,7 @@ class ProductController extends BaseController
         ProductMaterial::where('product_id', $productId)->delete();
         WarehouseProduct::where('product_id', $productId)->delete();
         Image::where('product_id', $productId)->delete();
+        Cart::where('product_id', $productId)->delete();
 
         $product->delete();
 
@@ -282,5 +244,46 @@ class ProductController extends BaseController
         return response()->json('Greska prilikom brisanja proizvoda', 500);
     }
 }
+
+public function updateProductAction(Request $request)
+{
+    try {
+        $request->validate([
+            'id' => 'required|integer',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'productImage' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $productId = $request->input('id');
+
+        $product = Product::find($productId);
+        $product->title = $request->input('title');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+
+        if ($request->hasFile('productImage')) {
+            $image = $request->file('productImage');
+            $imagePath = $image->move('assets/images/products/', $image->getClientOriginalName());
+            Image::where('product_id',$productId)->update([
+                'href' => $imagePath ?? null,
+                'alt' => $image->getFilename()
+            ]);
+        }
+
+        $quantity = $request->input('quantity');
+        WarehouseProduct::where('product_id', $productId)->update([
+            'quantity' => $quantity
+        ]);
+
+        $product->save();
+
+        return response()->json('Proizvod uspesno izmenjen!');
+    } catch (Exception $e) {
+        return response()->json('Greska prilikom izmene proizvoda', 500);
+    }
+}
+
 
 }

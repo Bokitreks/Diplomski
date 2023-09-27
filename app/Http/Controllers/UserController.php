@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Review;
 use App\Models\User;
 use Exception;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends BaseController
 {
@@ -25,15 +27,29 @@ class UserController extends BaseController
         $password = $request->input('password');
         $email = $request->input('email');
 
-        $validator = Validator::make($request->all(), [
-            'username' => 'required|min:3|max:50|unique:users',
-            'password' => 'required|min:6|max:50',
-            'email' => 'required|email|unique:users',
-        ]);
+        $customMessages = [
+            'username.unique' => 'Korisnicko ime vec postoji.',
+            'email.unique' => 'Email adresa vec postoji.',
+        ];
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
+    $validator = Validator::make($request->all(), [
+        'username' => [
+            'required',
+            'min:3',
+            'max:50',
+            Rule::unique('users'),
+        ],
+        'password' => 'required|min:6|max:50',
+        'email' => [
+            'required',
+            'email',
+            Rule::unique('users'),
+        ],
+    ],$customMessages);
+
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 400);
+    }
 
         $hashPassword = md5($password);
         $checkDuplicateEmail = self::checkDuplicateEmail($email);
@@ -43,7 +59,7 @@ class UserController extends BaseController
                     'username' => $username,
                     'password' => $hashPassword,
                     'email' => $email,
-                    'role_id' => 2
+                    'role_id' => 1
                 ]);
                 return Response()->json('Uspesna registracija', 201);
             } catch(Exception $e) {
@@ -68,7 +84,7 @@ class UserController extends BaseController
             return Response()->json($validator->errors(), 400);
         }
 
-        $user = User::where('username', $username)->first(); //TODO make username unique
+        $user = User::where('username', $username)->first();
         if($user) {
             $checkCredentials = $user->password == $hashPassword ? true : false;
             if($checkCredentials) {
@@ -113,17 +129,14 @@ class UserController extends BaseController
         $user = User::find($id);
 
         if (!$user) {
-            // Handle the case where the user doesn't exist
             return response()->json('Korisnik nije pronadjen', 404);
         }
 
-        // Check if the password input is provided and not empty
         if ($request->has('newPassword') && !empty($request->input('newPassword'))) {
             $password = md5($request->input('newPassword'));
-            $user->password = $password; // Update the password
+            $user->password = $password;
         }
 
-        // Update the user's other attributes
         $user->username = $username;
         $user->email = $email;
         $user->role_id = $role_id;
@@ -136,6 +149,7 @@ class UserController extends BaseController
     public function deleteUserAction(Request $request) {
         $userId = $request->input('userId');
         $user = User::find($userId);
+        $reviews = Review::where('user_id', $userId);
 
         if (!$user) {
             return response()->json('Korisnik nije pronadjen', 404);
@@ -143,6 +157,7 @@ class UserController extends BaseController
 
         try {
             $user->delete();
+            $reviews->delete();
             return response()->json('Korisnik uspesno obrisan', 200);
         } catch (Exception $e) {
             return response()->json('Greska prilikom brisanja korisnika' . $e, 500);

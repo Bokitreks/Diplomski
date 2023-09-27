@@ -16,6 +16,5 @@ class AdminController extends BaseController
         } else {
             return redirect('/');
         }
-
     }
 }

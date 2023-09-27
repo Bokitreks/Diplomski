@@ -49,6 +49,7 @@
 		<table>
 			<thead>
 				<tr>
+                    <th>ID</th>
 					<th>Naziv Proizvoda</th>
 					<th>Cena</th>
 					<th>Kolicina</th>
@@ -61,7 +62,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="3"><strong>Ukupno</strong></td>
+					<td colspan="4"><strong>Ukupno</strong></td>
 					<td class="cart-total">0 RSD</td>
 					<td></td>
 				</tr>

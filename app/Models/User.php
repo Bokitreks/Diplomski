@@ -12,4 +12,8 @@ class User extends Model
     public function review() {
         return $this->hasMany(User::class, 'user_id', 'id');
     }
+    public function shippingInfo()
+    {
+        return $this->hasOne(ShippingInfo::class, 'user_id');
+    }
 }

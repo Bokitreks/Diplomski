@@ -4,7 +4,7 @@ $( document ).ready(function( $ ) {
 	"use strict";
 
 
-    
+
         $(function() {
             $( "#tabs" ).tabs();
         });
@@ -19,7 +19,7 @@ $( document ).ready(function( $ ) {
                 $("#preloader").css("visibility", "hidden").fadeOut();
             }, 300);
         });
-        
+
 
         $(window).scroll(function() {
           var scroll = $(window).scrollTop();
@@ -136,13 +136,13 @@ $( document ).ready(function( $ ) {
            // fade:true,
             draggable:false,
             prevArrow:'<button class="PrevArrow"></button>',
-            nextArrow:'<button class="NextArrow"></button>', 
+            nextArrow:'<button class="NextArrow"></button>',
         });
 
         $('.filters ul li').click(function(){
         $('.filters ul li').removeClass('active');
         $(this).addClass('active');
-          
+
           var data = $(this).attr('data-filter');
           $grid.isotope({
             filter: data
@@ -174,5 +174,5 @@ $( document ).ready(function( $ ) {
 
             j.preventDefault();
         });
- 
+
 });

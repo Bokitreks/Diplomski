@@ -198,3 +198,6 @@ padding-bottom: 1%;
 #shipping-info {
     display: none;
 }
+#red-label {
+    color: red;
+}

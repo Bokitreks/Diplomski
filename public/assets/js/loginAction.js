@@ -43,12 +43,12 @@ function loginValidation(username, password) {
     let errors = [];
     if (!usernameRegex.test(username)) {
         errors.push(
-            "Username must contain minimum 5 characters,must begin with a letter,can contain letters,numbers and _"
+            "Korisnicko ime mora sazdrzati minimum 5 karaktera,mora poceti slovom,moze sadrzati slova,brojeve i _"
         );
     }
     if (!passwordRegex.test(password)) {
         errors.push(
-            "Password must contain minimum eight characters, at least one letter and one number"
+            "Sifra mora imati minimum 8 karaktera, mora sadrzati bar 1 slovo i 1 broj"
         );
     }
     console.log(errors);

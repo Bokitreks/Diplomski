@@ -2,14 +2,14 @@ $(document).ready(function() {
     getAllUsers();
     getAllCategories();
     getAllProducts();
+    getAllCarts();
 
     $('#users-table').on('click', '.edit-btn', function() {
         var hiddenForm = $(this).closest('tr').next().find('.hidden-form');
         if (hiddenForm.is(":hidden")) {
-            // Show the hidden form
+
             hiddenForm.show();
         } else {
-            // Hide the hidden form
             hiddenForm.hide();
         }
     });
@@ -17,10 +17,26 @@ $(document).ready(function() {
     $('#categories-table').on('click', '.edit-btn', function() {
         var hiddenForm = $(this).closest('tr').next().find('.hidden-form');
         if (hiddenForm.is(":hidden")) {
-            // Show the hidden form
             hiddenForm.show();
         } else {
-            // Hide the hidden form
+            hiddenForm.hide();
+        }
+    });
+
+    $('#products-table').on('click', '.edit-btn', function() {
+        var hiddenForm = $(this).closest('tr').next().find('.hidden-form');
+        if (hiddenForm.is(":hidden")) {
+            hiddenForm.show();
+        } else {
+            hiddenForm.hide();
+        }
+    });
+
+    $('#cart-table').on('click', '.edit-btn', function() {
+        var hiddenForm = $(this).closest('tr').next().find('.hidden-form');
+        if (hiddenForm.is(":hidden")) {
+            hiddenForm.show();
+        } else {
             hiddenForm.hide();
         }
     });
@@ -30,11 +46,11 @@ $(document).ready(function() {
         if (hiddenForm.is(":hidden")) {
             hiddenForm.show();
             getAllCategories();
-            getAllColors();
-            getAllWarehouses();
-            getAllManufacturers();
-            getAllMaterials();
-            getAllCategoriesForAddProduct();
+            populateColors();
+            populatelWarehouses();
+            populateManufacturers();
+            populateMaterials();
+            populateCategoriesForAddProduct();
             getAllWarehouses();
         } else {
             hiddenForm.hide();
@@ -100,7 +116,7 @@ function populateUsersTable(users) {
                         <input type="text" class="form-control" id="editPassword${user.id}">
                         <label for="editEmail${user.id}">Email</label>
                         <input type="text" class="form-control" id="editEmail${user.id}" value='${user.email}'>
-                        <label for="editRoleId${user.id}">Uloga</label>
+                        <label for="editRoleId${user.id}">Uloga (1-korisnik/2-administrator)</label>
                         <input type="text" class="form-control" id="editRoleId${user.id}" value='${user.role_id}'>
                     </div>
                     <button type="button" class="btn btn-primary editUserButton" data-user-id="${user.id}">Sacuvaj</button>
@@ -112,7 +128,6 @@ function populateUsersTable(users) {
 
     usersTable.html(data);
 
-// Define the event handler for edit buttons outside of the populateUsersTable function
 $('.editUserButton').click(function() {
     var userId = $(this).data('user-id');
     var newName = $('#editName' + userId).val();
@@ -123,9 +138,7 @@ $('.editUserButton').click(function() {
     var csrfToken = csrfTokenInput.value;
 
 
-    // Check if newPassword field is not empty
     if (newPassword.trim() === '') {
-        // If newPassword is empty, exclude it from the data
         var data = {
             '_token': csrfToken,
             'userId': userId,
@@ -134,7 +147,6 @@ $('.editUserButton').click(function() {
             'role_id': newRoleId,
         };
     } else {
-        // If newPassword is not empty, include it in the data
         var data = {
             '_token': csrfToken,
             'userId': userId,
@@ -161,7 +173,6 @@ $('.editUserButton').click(function() {
     });
 });
 
-// Add a click event handler for the delete buttons
 $('#users-table').on('click', '.delete-btn', function() {
     var userId = $(this).data('user-id');
     var csrfTokenInput = document.querySelector('input[name="_token"]');
@@ -207,7 +218,7 @@ $('#addNewUserButton').click(function() {
     };
 
     $.ajax({
-        url: 'api/user/addUser', // Update the URL to the endpoint for adding a new user
+        url: 'api/user/addUser',
         method: 'POST',
         data: data,
         success: function(response) {
@@ -266,7 +277,6 @@ function populateCategoriesTable(catrgories) {
 
     categoriesTable.html(data);
 
-    // Define the event handler for edit buttons outside of the populateUsersTable function
 $('.editCategoryButton').click(function() {
     var categoryId = $(this).data('category-id');
     var newCategoryName = $('#editCategoryName' + categoryId).val();
@@ -296,7 +306,6 @@ $('.editCategoryButton').click(function() {
     });
 });
 
-// Add a click event handler for the delete buttons
 $('#categories-table').on('click', '.delete-btn', function() {
     var categoryId = $(this).data('category-id');
     var csrfTokenInput = document.querySelector('input[name="_token"]');
@@ -335,7 +344,7 @@ $('#addNewCategoryButton').click(function() {
     };
 
     $.ajax({
-        url: 'api/categories/addCategory', // Update the URL to the endpoint for adding a new user
+        url: 'api/categories/addCategory',
         method: 'POST',
         data: data,
         success: function(response) {
@@ -355,6 +364,7 @@ function getAllProducts() {
         url: 'api/products/getAllProducts',
         method: 'GET',
         success: function(products) {
+            console.log(products);
             populateProductsTable(products);
         },
         error: function(xhr, status, error) {
@@ -368,6 +378,12 @@ function populateProductsTable(products) {
     var data = '';
     console.log(products);
     products.forEach(product => {
+        var quantityCount = 0;
+
+        product.warehouse_products.forEach(warehouseProduct => {
+            quantityCount += warehouseProduct.pivot.quantity;
+        });
+
         data += `
         <tr>
         <td>${product.id}</td>
@@ -386,7 +402,7 @@ function populateProductsTable(products) {
             }
         });
         data +=  `</td>
-        <td>999</td>
+        <td>${quantityCount}</td>
         <td>
           <img src="${product.images[0].href}" alt="Product A Thumbnail" width="50">
         </td>
@@ -398,30 +414,39 @@ function populateProductsTable(products) {
       <tr>
         <td colspan="6">
           <div class="hidden-form" style="display: none;">
-            <h4>Edit Product</h4>
+            <h4>Izmeni proizvod</h4>
             <form>
-              <div class="form-group">
-                <label for="editName">Name</label>
-                <input type="text" class="form-control" id="editName">
-              </div>
-              <div class="form-group">
-                <label for="editPrice">Price</label>
-                <input type="text" class="form-control" id="editPrice">
-              </div>
-              <div class="form-group">
-                <label for="editCategory">Category</label>
-                <input type="text" class="form-control" id="editCategory">
-              </div>
-              <div class="form-group">
-                <label for="editImage">Image Thumbnail</label>
-                <input type="file" class="form-control-file" id="editImage">
-                <small class="form-text text-muted">Choose a new image for the product.</small>
-              </div>
-              <button type="submit" class="btn btn-primary">Save</button>
-            </form>
-          </div>
-        </td>
-      </tr>`
+            <div class="form-group">
+              <label for="productName">Naziv</label>
+              <input type="text" class="form-control" id="editProductName" value="${product.title}">
+            </div>
+            <div class="form-group">
+              <label for="productDescription">Opis</label>
+              <textarea class="form-control" id="editProductDescription">${product.description}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="productPrice">Cena</label>
+              <input type="text" class="form-control" id="editProductPrice" value="${product.price}">
+            </div>`
+            product.warehouse_products.forEach(warehouseProduct => {
+                var quantityCount = warehouseProduct.pivot.quantity;
+
+                data += ` <div class="form-group">
+                            <label for="editProductStock">Magacin - ${warehouseProduct.warehouse_name}</label>
+                            <input type="text" class="form-control" id="editProductStock" value="${quantityCount}">
+                            </div>`;
+            });
+        data += `
+            <div class="form-group">
+              <label for="productImage">Image Thumbnail</label>
+              <input type="file" class="form-control-file" id="productImage">
+              <small class="form-text text-muted">Choose a new image for the product.</small>
+            </div>
+            <button type="button" class="btn btn-primary editProductButton" data-product-id="${product.id}">Izmeni proizvod</button>
+          </form>
+            </div>
+            </td>
+        </tr>`
     });
 
     productsTable.html(data);
@@ -451,98 +476,197 @@ $('#products-table').on('click', '.delete-btn', function() {
         });
     }
 });
+
+$('.editProductButton').click(function() {
+    var productId = $(this).data('product-id');
+    var productName = $('#editProductName').val();
+    var productDescription = $('#editProductDescription').val();
+    var productPrice = $('#editProductPrice').val();
+    var productStock = $('#editProductStock').val();
+    var productImageField = $('#productImage')[0];
+
+    var updatedProduct = new FormData();
+    updatedProduct.append('id', productId);
+    updatedProduct.append('title', productName);
+    updatedProduct.append('description', productDescription);
+    updatedProduct.append('price', productPrice);
+    updatedProduct.append('quantity', productStock);
+
+    if (productImageField.files[0]) {
+        updatedProduct.append('productImage', productImageField.files[0]);
+    }
+
+    $.ajax({
+        url: 'api/products/updateProduct',
+        method: 'POST',
+        processData: false,
+        contentType: false,
+        data: updatedProduct,
+        success: function(response) {
+            console.log(response);
+            alert(response);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+            alert(xhr.responseText);
+        }
+    });
+});
+
+
 }
 
 function getAllManufacturers() {
-    let manufacturerSelect = $('#newManufacturerSelect');
-    $.ajax({
+    let manufacturers =  $.ajax({
         url: 'api/manufacturers/getAllManufacturers',
         method: 'GET',
         success: function(manufacturers) {
-            let data = '';
-            manufacturers.forEach(manufacturer => {
-                data += `<option value="${manufacturer.id}">${manufacturer.manufacturer_name}</option>`;
-            });
-            manufacturerSelect.html(data);
+            return manufacturers;
         },
         error: function(xhr, status, error) {
             console.log(error);
         }
+    });
+    return manufacturers;
+}
+
+function populateManufacturers() {
+    let manufacturers =  getAllManufacturers()
+    .then(function(manufacturers) {
+        let manufacturerSelect = $('#newManufacturerSelect');
+        let data = '';
+        manufacturers.forEach(manufacturer => {
+            data += `<option value="${manufacturer.id}">${manufacturer.manufacturer_name}</option>`;
+        });
+        manufacturerSelect.html(data);
+    })
+    .catch(function(error) {
+        console.log(error);
     });
 }
 
 function getAllColors() {
-    let colorSelect = $('#newColorSelect');
+    let allColors =
     $.ajax({
         url: 'api/colors/getAllColors',
         method: 'GET',
         success: function(colors) {
-            let data = '';
-            colors.forEach(color => {
-                data += `<option value="${color.id}">${color.color}</option>`;
-            });
-            colorSelect.html(data);
+            return colors;
         },
         error: function(xhr, status, error) {
             console.log(error);
         }
+    });
+
+    return allColors;
+}
+
+function populateColors() {
+    let colors =  getAllColors()
+    .then(function(colors) {
+    let colorSelect = $('#newColorSelect');
+    let data = '';
+    colors.forEach(color => {
+        data += `<option value="${color.id}">${color.color}</option>`;
+    });
+    colorSelect.html(data);
+    })
+    .catch(function(error) {
+        console.log(error);
     });
 }
 
 function getAllMaterials() {
-    let materialSelect = $('#newMaterialSelect');
+    let materials =
     $.ajax({
         url: 'api/materials/getAllMaterials',
         method: 'GET',
         success: function(materials) {
-            console.log(materials);
-            let data = '';
-            materials.forEach(material => {
-                data += `<option value="${material.id}">${material.material}</option>`;
-            });
-            materialSelect.html(data);
+            return materials;
         },
         error: function(xhr, status, error) {
             console.log(error);
         }
+    });
+    return materials;
+}
+
+function populateMaterials() {
+    let materials =  getAllMaterials()
+    .then(function(materials) {
+    let materialSelect = $('#newMaterialSelect');
+    let data = '';
+    materials.forEach(material => {
+        data += `<option value="${material.id}">${material.material}</option>`;
+    });
+    materialSelect.html(data);
+    })
+    .catch(function(error) {
+        console.log(error);
     });
 }
 
 function getAllWarehouses() {
-    let warehouseSelect = $('#newWarehouseSelect');
+    let warehouses =
     $.ajax({
         url: 'api/warehouses/getAllWarehouses',
         method: 'GET',
         success: function(warehouses) {
-            let data = '';
-            warehouses.forEach(warehouse => {
-                data += `<option value="${warehouse.id}">${warehouse.warehouse_name}</option>`;
-            });
-            warehouseSelect.html(data);
+            return warehouses;
         },
         error: function(xhr, status, error) {
             console.log(error);
         }
+    });
+    return warehouses;
+}
+
+function populatelWarehouses() {
+    let warehouses =  getAllWarehouses()
+    .then(function(warehouses) {
+    let warehouseSelect = $('#newWarehouseSelect');
+    let data = '';
+    warehouses.forEach(warehouse => {
+        data += `<option value="${warehouse.id}">${warehouse.warehouse_name}</option>`;
+    });
+    warehouseSelect.html(data);
+    })
+    .catch(function(error) {
+        console.log(error);
     });
 }
 
 function getAllCategoriesForAddProduct() {
-    let categoriesSelect = $('#newCategorySelect');
+    let categories =
     $.ajax({
         url: 'api/categories/getAllCategories',
         method: 'GET',
         success: function(categories) {
-            let data = '';
-            categories.forEach(category => {
-                data += `<option value="${category.id}">${category.category_name}</option>`;
-            });
-            categoriesSelect.html(data);
+            return categories;
         },
         error: function(xhr, status, error) {
             console.log(error);
         }
     });
+    return categories;
 }
+
+function populateCategoriesForAddProduct() {
+    let categories = getAllCategoriesForAddProduct()
+    .then(function(categories) {
+    let categoriesSelect = $('#newCategorySelect');
+    let data = '';
+    categories.forEach(category => {
+        data += `<option value="${category.id}">${category.category_name}</option>`;
+    });
+    categoriesSelect.html(data);
+})
+.catch(function(error) {
+    console.log(error);
+});
+}
+
 $('#addNewProductButton').click(function() {
     var productName = $('#newProductName').val();
     var productDescription = $('#newProductDescription').val();
@@ -585,4 +709,132 @@ $('#addNewProductButton').click(function() {
     });
 });
 
+function getAllCarts() {
+    $.ajax({
+        url: 'api/carts/getAllCarts',
+        method: 'GET',
+        success: function(carts) {
+            populateCartsTable(carts);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
 
+function populateCartsTable(carts) {
+    let cartTable = $('#cart-table');
+    let data = '';
+    carts.forEach(cart => {
+        data += `<tr>`
+        const createdAt = new Date(cart.created_at);
+        const formattedDate = createdAt.toLocaleDateString('en-GB');
+             data+= ` <td>${formattedDate}</td>`
+            data+= `  <td>${cart.id}</td>
+              <td>${cart.user.username}</td>
+              <td>${cart.product.title}</td>
+              <td>${cart.quantity}</td>`
+              if(cart.shipping == 0) {
+                data+= `<td>U radnji</td>`
+              } else {
+                data+= `<td>Dostava (Adresa : ${cart.user.shipping_info.address} ,${cart.user.shipping_info.city}) </td>`
+              }
+              if(cart.is_payed == 0) {
+                data+= `<td>Nije</td>`
+              } else {
+                data+= `<td>Jeste</td>`
+              }
+              if(cart.is_finished == 0) {
+                data+= `<td>Nije</td>`
+              } else {
+                data+= `<td>Jeste</td>`
+              }
+            data+=`
+              <td>
+                <button class="btn btn-sm btn-primary edit-btn">Izmeni</button>
+                <button class="btn btn-sm btn-danger delete-btn" data-cart-product-id="${cart.product.id}"  data-cart-quantity="${cart.quantity}" data-cart-id="${cart.id}" >Obrisi</button>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="6">
+                <div class="hidden-form" style="display: none;">
+                  <h4>Izmeni narudzbenicu</h4>
+                  <form>
+                    <div class="form-group">
+                      <label for="editCartPayment">Placenjo</label>
+                        <select id="editCartIsPayed">
+                            <option value="0">Nije placeno</option>
+                            <option value="1">Placeno</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="editCartShipping">Isporuceno</label>
+                      <select id="editCartShipping">
+                            <option value="0">Nije isporuceno</option>
+                            <option value="1">Isporuceno</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary editCartButton" data-cart-id="${cart.id}">Sacuvaj</button>
+                  </form>
+                </div>
+              </td>
+            </tr>`;
+    });
+    cartTable.html(data);
+
+    $('#cart-table').on('click', '.delete-btn', function() {
+        var cartId = $(this).data('cart-id');
+        var quantity = $(this).data('cart-quantity');
+        var productId = $(this).data('cart-product-id');
+        var csrfTokenInput = document.querySelector('input[name="_token"]');
+        var csrfToken = csrfTokenInput.value;
+
+        if (confirm("Jel ste sigurni da zelite da obrisete narudzbenicu?")) {
+            $.ajax({
+                url: 'api/carts/deleteCart',
+                method: 'DELETE',
+                data: {
+                    '_token': csrfToken,
+                    'cartId': cartId,
+                    'quantity' : quantity,
+                    'productId' : productId
+                },
+                success: function(response) {
+                    console.log(response);
+                    alert(response);
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                    alert(xhr.responseText);
+                }
+            });
+        }
+    });
+    $('.editCartButton').click(function() {
+        var cartId = $(this).data('cart-id');
+        var is_finished = $('#editCartShipping').val();
+        var is_payed = $('#editCartIsPayed').val();
+
+        var updatedCart = new FormData();
+        updatedCart.append('id', cartId);
+        updatedCart.append('is_finished', is_finished);
+        updatedCart.append('is_payed', is_payed);
+        $.ajax({
+            url: 'api/carts/updateCart',
+            method: 'POST',
+            data: updatedCart,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log(response);
+                alert(response);
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+                alert(xhr.responseText);
+            }
+        });
+    });
+}

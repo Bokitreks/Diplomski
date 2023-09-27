@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ManufacturerController;
@@ -38,13 +39,15 @@ Route::prefix('products')->group(function () {
     Route::get('/getAllProducts',[ProductController::class,'getAllProductsAction'])->name('getAllProductsAction');
     Route::get('/getProducts',[ProductController::class,'getProductsAction'])->name('getProductsAction');
     Route::post('/addNewProduct',[ProductController::class,'addNewProductAction'])->name('addNewProductAction');
+    Route::post('/updateProduct',[ProductController::class,'updateProductAction'])->name('updateProductAction');
     Route::post('/sortProducts',[ProductController::class,'sortProductsAction'])->name('sortProductsAction');
     Route::post('/confirmOrderWithoutShipping',[ProductController::class,'confirmOrderWithoutShippingAction'])->name('confirmOrderWithoutShippingAction');
     Route::post('/confirmOrderWithShipping',[ProductController::class,'confirmOrderWithShippingAction'])->name('confirmOrderWithShippingAction');
     Route::delete('/deleteProduct',[ProductController::class,'deleteProductAction'])->name('deleteProductAction');
 });
 Route::prefix('reviews')->group(function() {
-    Route::post('/writeReview',[ReviewController::class, 'create'])->name('WriteReviewAction');
+    Route::post('/writeReview',[ReviewController::class, 'writeReviewAction'])->name('writeReviewAction');
+    Route::delete('/deleteReview',[ReviewController::class, 'deleteReviewAction'])->name('deleteReviewAction');
 });
 Route::prefix('categories')->group(function() {
     Route::get('/getAllCategories',[CategoryController::class, 'getAllCategoriesAction'])->name('getAllCategotiesAction');
@@ -63,4 +66,9 @@ Route::prefix('materials')->group(function() {
 });
 Route::prefix('warehouses')->group(function() {
     Route::get('/getAllWarehouses',[WarehouseController::class, 'getAllWarehousesAction'])->name('getAllWarehousesAction');
+});
+Route::prefix('carts')->group(function() {
+    Route::get('/getAllCarts',[CartController::class, 'getAllCartsAction'])->name('getAllCartsAction');
+    Route::post('/updateCart',[CartController::class, 'updateCartAction'])->name('updateCartAction');
+    Route::delete('/deleteCart',[CartController::class, 'deleteCartAction'])->name('deleteCartAction');
 });

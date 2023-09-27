@@ -15,7 +15,7 @@ class ColorSeeder extends Seeder
     public function run()
     {
         $date = Date('Y-m-d h:m:s');
-        $colors = ['Crna', 'Bela', 'Siva', 'Plava', 'Zuta', 'Crvena', 'Braon'];
+        $colors = ['Crna', 'Bela', 'Siva', 'Plava', 'Zuta', 'Crvena', 'Braon', 'Bez', 'Ljubicasta', 'Narandzasta', 'Zelena', 'Teget'];
         foreach($colors as $color)
         DB::table('colors')->insert([
             'color' => $color,

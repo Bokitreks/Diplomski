@@ -32,8 +32,6 @@
                     <li><p>/</p></li>
                     <li><a class="login-register-link" href="{{route('register')}}">Registracija</a></li>
                 @else
-                <li><a id="#" class="userButtons" href="#">Podesavanja</a></li>
-                <li><p> | </p></li>
                 <li><a id="logut_button" class="userButtons" href="#">Odjava</a></li>
                 @endif
               </ul>
