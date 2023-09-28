@@ -444,7 +444,7 @@ function populateProductsTable(products) {
                 <div class="form-group">
                   <label for="productImage">Image Thumbnail</label>
                   <input type="file" class="form-control-file" id="productImage_${product.id}">
-                  <small class="form-text text-muted">Choose a new image for the product.</small>
+                  <small class="form-text text-muted">Izaberite novu sliku za proizvod</small>
                 </div>
                 <button type="button" class="btn btn-primary editProductButton" data-product-id="${product.id}">Izmeni proizvod</button>
               </form>
