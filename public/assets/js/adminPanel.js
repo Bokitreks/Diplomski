@@ -455,7 +455,7 @@ function populateProductsTable(products) {
 
     productsTable.html(data);
 
-    $('.delete-btn').click(function () {
+    $('#products-table').on('click', '.delete-btn', function() {
       var productId = $(this).data('product-id');
       var csrfTokenInput = document.querySelector('input[name="_token"]');
       var csrfToken = csrfTokenInput.value;
